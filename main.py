@@ -47,9 +47,10 @@ def generate_flashcards(start_position, turn_depth, response_depth):
 position = ITALIAN_GAME
 td = 3
 rd = 2
-num_flashcards = sum([rd ** n for n in range(td)])
-print(f'Generating up to {num_flashcards} flashcards...')
-generate_flashcards([], td, rd)
+nf = sum([rd ** n for n in range(td)])
+nf = nf if len(position) % 2 == 0 else nf * rd
+print(f'Generating up to {nf} flashcards...')
+generate_flashcards(position, td, rd)
 sorted_flashcards = sorted(flashcards, key = lambda x: len(x.position))
 for i, flashcard in enumerate(sorted_flashcards, 1):
     print(str(i) + ': ' + str(flashcard.position) + ' | ' + flashcard.your_best_move)
