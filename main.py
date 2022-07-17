@@ -1,17 +1,17 @@
 from stockfish import Stockfish
 
-stockfish = Stockfish(path = "stockfish_15_win_x64_avx2\stockfish_15_x64_avx2.exe")
+fish = Stockfish(path = "stockfish_15_win_x64_avx2\stockfish_15_x64_avx2.exe")
 
 moves = {}
-for i in stockfish.get_top_moves(3):
-    stockfish.set_position([i['Move']])
-    moves[i['Move']] = [j for j in stockfish.get_top_moves(3)]
+for i in fish.get_top_moves(3):
+    fish.set_position([i['Move']])
+    moves[i['Move']] = [j for j in fish.get_top_moves(3)]
 
 
 ITALIAN_GAME = ['e2e4', 'e7e5', 'g1f3', 'b8c6', 'f1c4']
 
 class Flashcard:
-    sf = stockfish
+    sf = fish
 
     def __init__(self, position, best_move) -> None:
         self.position = position
@@ -23,27 +23,32 @@ class Flashcard:
         return Flashcard.sf.get_board_visual() + '\n' + 'Opponent did: ' + self.opponents_move + '\n' + 'Your best move is: ' + self.your_best_move + '\n\n'
 
 flashcards = []
-def get_best_moves(start_position, turn_depth, response_depth):
+def generate_flashcards(start_position, turn_depth, response_depth):
     white_to_move = len(start_position) % 2 == 0
-    stockfish.set_position(start_position)
+    fish.set_position(start_position)
     if turn_depth == 0:
         return
     else:
         temp_response_depth = 1 if white_to_move else response_depth
-        for response in stockfish.get_top_moves(temp_response_depth):
+        for response in fish.get_top_moves(temp_response_depth):
             if white_to_move:
                 flashcard = Flashcard(start_position, response['Move'])
+                flashcard.set_
                 flashcards.append(flashcard)
                 turn_depth -= 1
             new_position = start_position + [response['Move']]
-            get_best_moves(new_position, turn_depth, response_depth)
+            generate_flashcards(new_position, turn_depth, response_depth)
 
-td = 10
+# def get_centipawn(position):
+#     fish.set_position(position)
+#     return fish.get_evaluation()['value']
+
+position = ITALIAN_GAME
+td = 7
 rd = 3
 num_flashcards = sum([rd ** n for n in range(td)])
 print(f'Generating {num_flashcards} flashcards...')
-get_best_moves([], td, rd)
-# get_best_moves(ITALIAN_GAME, 5, 3)
+generate_flashcards(position, td, rd)
 sorted_flashcards = sorted(flashcards, key = lambda x: len(x.position))
 for i, flashcard in enumerate(sorted_flashcards, 1):
     print(str(i) + ': ' + str(flashcard.position) + ' | ' + flashcard.your_best_move)
