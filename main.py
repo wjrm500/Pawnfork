@@ -43,15 +43,17 @@ def generate_flashcards(start_position, turn_depth, response_depth, player_colou
         generate_flashcards(new_position, turn_depth, response_depth, player_colour)
     else: # Opponent to move
         top_moves = fish.get_top_moves(response_depth)
-        min_centipawn = min([x['Centipawn'] for x in top_moves]) # i.e. Centipawn value of black's best move
-        good_top_moves = [x for x in top_moves if x['Centipawn'] < min_centipawn + 100] # Filter out any black moves that are significantly worse than the best move
-        for top_move in top_moves:
+        centipawns = [x['Centipawn'] for x in top_moves]
+        best_centipawn = min(centipawns) if player_colour == Colour.WHITE else max(centipawns) # i.e. Centipawn value of opponent's best move
+        filter_good_moves = lambda x: x['Centipawn'] < best_centipawn + 100 if player_colour == Colour.WHITE else lambda x: x['Centipawn'] > best_centipawn - 100
+        good_top_moves = filter(filter_good_moves, top_moves) # Filter out any opponent moves that are significantly worse than the best move
+        for top_move in good_top_moves:
             new_position = start_position + [top_move['Move']]
             generate_flashcards(new_position, turn_depth, response_depth, player_colour)
 
 position = ITALIAN_GAME
-turn_depth = 2
-response_depth = 2
+turn_depth = 3
+response_depth = 3
 player_colour = Colour.WHITE
 num_flashcards = sum([response_depth ** n for n in range(turn_depth)])
 colour_to_move = Colour.WHITE if len(position) % 2 == 0 else Colour.BLACK
