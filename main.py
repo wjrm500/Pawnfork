@@ -2,6 +2,10 @@ from stockfish import Stockfish
 
 fish = Stockfish(path = "stockfish_15_win_x64_avx2\stockfish_15_x64_avx2.exe")
 
+class Colour:
+    WHITE = 'white'
+    BLACK = 'black'
+
 moves = {}
 for i in fish.get_top_moves(3):
     fish.set_position([i['Move']])
@@ -23,34 +27,38 @@ class Flashcard:
         return Flashcard.sf.get_board_visual() + '\n' + 'Opponent did: ' + self.opponents_move + '\n' + 'Your best move is: ' + self.your_best_move + '\n\n'
 
 flashcards = []
-def generate_flashcards(start_position, turn_depth, response_depth):
+def generate_flashcards(start_position, turn_depth, response_depth, player_colour = Colour.WHITE):
     if turn_depth == 0:
         return
-    white_to_move = len(start_position) % 2 == 0
+    colour_to_move = Colour.WHITE if len(start_position) % 2 == 0 else Colour.BLACK
+    player_to_move = colour_to_move == player_colour
     fish.set_position(start_position)
-    if white_to_move:
+    if player_to_move:
         top_moves = fish.get_top_moves(1)
         top_move = top_moves[0]
         flashcard = Flashcard(start_position, top_move['Move'])
         flashcards.append(flashcard)
         turn_depth -= 1
         new_position = start_position + [top_move['Move']]
-        generate_flashcards(new_position, turn_depth, response_depth)
-    else: # Black to move
+        generate_flashcards(new_position, turn_depth, response_depth, player_colour)
+    else: # Opponent to move
         top_moves = fish.get_top_moves(response_depth)
         min_centipawn = min([x['Centipawn'] for x in top_moves]) # i.e. Centipawn value of black's best move
         good_top_moves = [x for x in top_moves if x['Centipawn'] < min_centipawn + 100] # Filter out any black moves that are significantly worse than the best move
-        for top_move in good_top_moves:
+        for top_move in top_moves:
             new_position = start_position + [top_move['Move']]
-            generate_flashcards(new_position, turn_depth, response_depth)
+            generate_flashcards(new_position, turn_depth, response_depth, player_colour)
 
 position = ITALIAN_GAME
-td = 3
-rd = 2
-nf = sum([rd ** n for n in range(td)])
-nf = nf if len(position) % 2 == 0 else nf * rd
-print(f'Generating up to {nf} flashcards...')
-generate_flashcards(position, td, rd)
+turn_depth = 2
+response_depth = 2
+player_colour = Colour.WHITE
+num_flashcards = sum([response_depth ** n for n in range(turn_depth)])
+colour_to_move = Colour.WHITE if len(position) % 2 == 0 else Colour.BLACK
+player_to_move = colour_to_move == player_colour
+num_flashcards = num_flashcards if player_to_move else num_flashcards * response_depth
+print(f'Generating up to {num_flashcards} flashcards...')
+generate_flashcards(position, turn_depth, response_depth, player_colour)
 sorted_flashcards = sorted(flashcards, key = lambda x: len(x.position))
 for i, flashcard in enumerate(sorted_flashcards, 1):
     print(str(i) + ': ' + str(flashcard.position) + ' | ' + flashcard.your_best_move)
