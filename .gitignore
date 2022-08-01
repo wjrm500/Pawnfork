@@ -1,3 +1,6 @@
 stockfish_15_win_x64_avx2/
 venv/
 todos.txt
+**/__pycache__
+*.drawio
+static/
