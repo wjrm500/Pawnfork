@@ -1,8 +1,8 @@
-from PIL import ImageTk,  Image
+from PIL import ImageTk, Image
 import tkinter
 from typing import List
 
-from logic.pieces.Piece import Piece
+from logic.pieces import *
 
 class Kinter():
     def __init__(self) -> None:
@@ -23,12 +23,19 @@ class Kinter():
             real_x, real_y = virtual_x * self.canvas_dimension / 8, virtual_y * self.canvas_dimension / 8
             print(real_x, real_y)
             image = Image.open(piece.image_filepath())
-            image = image.resize((50, 50))
+            image_dimension_dict = {
+                Bishop: 15,
+                King: 10,
+                Knight: 16,
+                Pawn: 20,
+                Queen: 10,
+                Rook: 18
+            }
+            image_dimension = int(self.canvas_dimension / image_dimension_dict[piece.__class__])
+            image = image.resize((image_dimension, image_dimension))
             image = ImageTk.PhotoImage(image)
             self.images.append(image)
             self.canvas.create_image(real_x, real_y, anchor = tkinter.CENTER, image = image)
-        self.root.mainloop()
     
-    def run(self):
-        pass
-        # self.root.mainloop()
+    def run(self) -> None:
+        self.root.mainloop()
