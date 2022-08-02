@@ -8,3 +8,6 @@ class Piece:
     def image_filepath(self):
         piece_name = self.__class__.__name__.lower()
         return f'./static/images/pieces/originals/{self.colour}/{piece_name}.png'
+    
+    def move(self, square):
+        self.square = square

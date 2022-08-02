@@ -1,9 +1,12 @@
+from stockfish import Stockfish
+
 from logic.Square import Square
 from logic.pieces import *
 import logic.consts.colours as colours
 
 class Board:
     def __init__(self) -> None:
+        self.stockfish = Stockfish(path = "stockfish_15_win_x64_avx2\stockfish_15_x64_avx2.exe")
         self.squares = {}
         self.pieces = []
     
@@ -12,8 +15,8 @@ class Board:
             self.squares[square.file_name] = {}
         self.squares[square.file_name][square.rank_name] = square
     
-    def get_square(self, square_string):
-        file_name, rank_name = list(square_string)
+    def get_square(self, square_str):
+        file_name, rank_name = list(square_str)
         return self.squares[file_name][rank_name]
     
     def add_piece(self, piece, colour, square: Square):
@@ -57,3 +60,16 @@ class Board:
         self.add_piece(Bishop, colours.BLACK, self.get_square('f8'))
         self.add_piece(Knight, colours.BLACK, self.get_square('g8'))
         self.add_piece(Rook, colours.BLACK, self.get_square('h8'))
+    
+    def move(self, move_str):
+        from_square_str, to_square_str = move[:2], move[2:]
+        from_square = board.get_square(from_square_str)
+        piece_on_square = from_square.piece
+        if not piece_on_square:
+            raise Exception(f'No piece on square {from_square_str}')
+        move_valid = self.stockfish.is_move_correct(from_square_str + to_square_str)
+        if not move_valid:
+            raise Exception(f'Move invalid')
+        to_square = board.get_square(to_square_str)
+        piece.move(to_square)
+        self.stockfish.make_moves_from_current_position(move_str)
