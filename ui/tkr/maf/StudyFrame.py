@@ -3,7 +3,7 @@ from ui.ColorConsts import ColorConsts
 
 from ui.tkr.maf.bcf.BoardCanvas import BoardCanvas
 
-class BoardCanvasFrame(tk.Frame):
+class StudyFrame(tk.Frame):
     def __init__(self, master: tk.Tk) -> None:
         super().__init__(
             master,

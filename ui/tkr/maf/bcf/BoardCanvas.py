@@ -2,7 +2,7 @@ from PIL import ImageTk, Image
 import tkinter as tk
 from typing import List
 
-from logic.pieces import *
+from logic.board.pieces import *
 from ui.ColorConsts import ColorConsts
 
 class BoardCanvas(tk.Canvas):

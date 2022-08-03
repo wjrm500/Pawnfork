@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from logic.pieces import *
+from logic.board.pieces import *
 from ui.tkr.MainFrame import MainFrame
 
 class Window(tk.Tk):

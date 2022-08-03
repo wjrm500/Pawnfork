@@ -1,4 +1,4 @@
-from logic.Square import Square
+from logic.board.Square import Square
 
 class Piece:
     def __init__(self, colour, square: Square) -> None:

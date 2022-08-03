@@ -1,7 +1,7 @@
 from stockfish import Stockfish
 
-from logic.Square import Square
-from logic.pieces import *
+from logic.board.Square import Square
+from logic.board.pieces import *
 import logic.consts.colours as colours
 
 class Board:

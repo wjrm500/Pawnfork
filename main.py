@@ -1,7 +1,7 @@
 from stockfish import Stockfish
 
-from logic.Board import Board
-from logic.Square import Square
+from logic.board.Board import Board
+from logic.board.Square import Square
 from ui.Window import Window
 
 board = Board()
