@@ -3,10 +3,11 @@ from stockfish import Stockfish
 from logic.board.Square import Square
 from logic.board.pieces import *
 import logic.consts.colours as colours
+from logic.consts.filepaths import STOCKFISH_FILEPATH
 
 class Board:
     def __init__(self) -> None:
-        self.stockfish = Stockfish(path = "stockfish_15_win_x64_avx2\stockfish_15_x64_avx2.exe")
+        self.stockfish = Stockfish(path = STOCKFISH_FILEPATH)
         self.squares = {}
         self.pieces = []
     
