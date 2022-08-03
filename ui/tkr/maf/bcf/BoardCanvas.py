@@ -3,16 +3,25 @@ import tkinter as tk
 from typing import List
 
 from logic.pieces import *
+from ui.ColorConsts import ColorConsts
 
 class BoardCanvas(tk.Canvas):
     def __init__(self, master: tk.Frame) -> None:
-        super().__init__(master)
-        self.dimension = 1000
+        super().__init__(
+            master,
+            background = ColorConsts.BACKGROUND_COLOR
+        )
+        self.dimension = 500
         self.config(height = self.dimension, width = self.dimension)
-        self.background = tk.PhotoImage(file = './static/images/chessboard.png')
-        self.create_image(0, 0, anchor = tk.NW, image = self.background)
         self.images = []
+        self.add_background()
         self.pack()
+    
+    def add_background(self) -> None:
+        image = Image.open('./static/images/chessboard.png')
+        image = image.resize((self.dimension, self.dimension), Image.ANTIALIAS)
+        self.background = ImageTk.PhotoImage(image)
+        self.create_image(0, 0, anchor = tk.NW, image = self.background)
 
     def add_pieces(self, pieces: List[Piece]) -> None:
         for piece in pieces:
