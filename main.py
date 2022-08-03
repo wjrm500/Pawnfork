@@ -1,7 +1,8 @@
+from stockfish import Stockfish
+
 from logic.Board import Board
 from logic.Square import Square
-from Kinter import Kinter
-from stockfish import Stockfish
+from ui.TkRoot import TkRoot
 
 board = Board()
 squares = []
@@ -17,6 +18,6 @@ for move in ITALIAN_GAME:
     from_square_str, to_square_str = move[:2], move[2:]
     board.get_square(from_square_str).piece.move(board.get_square(to_square_str))
 
-kinter = Kinter()
-kinter.add_pieces(board.pieces)
-kinter.run()
+tk_root = TkRoot()
+tk_root.frame.canvas.add_pieces(board.pieces)
+tk_root.run()
