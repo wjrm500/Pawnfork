@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from ui.tkr.maf.tif.TitleText import TitleText
+from ui.win.maf.tif.TitleText import TitleText
 from ui.ColorConsts import ColorConsts
 
 class TitleFrame(tk.Frame):

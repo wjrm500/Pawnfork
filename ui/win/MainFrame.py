@@ -1,8 +1,8 @@
 import tkinter as tk
 
-from ui.tkr.maf.StudyFrame import StudyFrame
-from ui.tkr.maf.HomeFrame import HomeFrame
-from ui.tkr.maf.TitleFrame import TitleFrame
+from ui.win.maf.StudyFrame import StudyFrame
+from ui.win.maf.HomeFrame import HomeFrame
+from ui.win.maf.TitleFrame import TitleFrame
 
 class MainFrame(tk.Frame):
     def __init__(self, master: tk.Tk) -> None:

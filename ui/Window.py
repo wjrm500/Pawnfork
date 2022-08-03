@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from logic.board.pieces import *
-from ui.tkr.MainFrame import MainFrame
+from ui.win.MainFrame import MainFrame
 
 class Window(tk.Tk):
     def __init__(self) -> None:

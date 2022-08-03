@@ -1,7 +1,7 @@
 import tkinter as tk
 from ui.ColorConsts import ColorConsts
 
-from ui.tkr.maf.bcf.BoardCanvas import BoardCanvas
+from ui.win.maf.stf.BoardCanvas import BoardCanvas
 
 class StudyFrame(tk.Frame):
     def __init__(self, master: tk.Tk) -> None:
