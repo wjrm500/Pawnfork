@@ -19,5 +19,5 @@ for move in ITALIAN_GAME:
     board.get_square(from_square_str).piece.move(board.get_square(to_square_str))
 
 tk_root = TkRoot()
-tk_root.frame.canvas.add_pieces(board.pieces)
+tk_root.frame.frame.canvas.add_pieces(board.pieces)
 tk_root.run()

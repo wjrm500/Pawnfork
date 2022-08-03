@@ -1,7 +1,7 @@
 import tkinter
 
 from logic.pieces import *
-from ui.MainFrame import MainFrame
+from ui.tkr.MainFrame import MainFrame
 
 class TkRoot(tkinter.Tk):
     def __init__(self) -> None:
