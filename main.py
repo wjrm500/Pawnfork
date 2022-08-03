@@ -2,7 +2,7 @@ from stockfish import Stockfish
 
 from logic.Board import Board
 from logic.Square import Square
-from ui.TkRoot import TkRoot
+from ui.Window import Window
 
 board = Board()
 squares = []
@@ -18,6 +18,6 @@ for move in ITALIAN_GAME:
     from_square_str, to_square_str = move[:2], move[2:]
     board.get_square(from_square_str).piece.move(board.get_square(to_square_str))
 
-tk_root = TkRoot()
-tk_root.frame.frame.canvas.add_pieces(board.pieces)
-tk_root.run()
+window = Window()
+window.frame.frame.canvas.add_pieces(board.pieces)
+window.run()
