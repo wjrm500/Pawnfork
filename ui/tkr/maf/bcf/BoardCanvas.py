@@ -1,16 +1,16 @@
 from PIL import ImageTk, Image
-import tkinter
+import tkinter as tk
 from typing import List
 
 from logic.pieces import *
 
-class BoardCanvas(tkinter.Canvas):
-    def __init__(self, master: tkinter.Frame) -> None:
+class BoardCanvas(tk.Canvas):
+    def __init__(self, master: tk.Frame) -> None:
         super().__init__(master)
         self.dimension = 1000
         self.config(height = self.dimension, width = self.dimension)
-        self.background = tkinter.PhotoImage(file = './static/images/chessboard.png')
-        self.create_image(0, 0, anchor = tkinter.NW, image = self.background)
+        self.background = tk.PhotoImage(file = './static/images/chessboard.png')
+        self.create_image(0, 0, anchor = tk.NW, image = self.background)
         self.images = []
         self.pack()
 
@@ -31,4 +31,4 @@ class BoardCanvas(tkinter.Canvas):
             image = image.resize((image_dimension, image_dimension))
             image = ImageTk.PhotoImage(image)
             self.images.append(image)
-            self.create_image(real_x, real_y, anchor = tkinter.CENTER, image = image)
+            self.create_image(real_x, real_y, anchor = tk.CENTER, image = image)

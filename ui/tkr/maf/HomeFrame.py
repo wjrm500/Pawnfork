@@ -1,6 +1,6 @@
-import tkinter
+import tkinter as tk
 
-class HomeFrame(tkinter.Frame):
-    def __init__(self, master: tkinter.Tk) -> None:
+class HomeFrame(tk.Frame):
+    def __init__(self, master: tk.Tk) -> None:
         super().__init__(master)
         self.pack()
