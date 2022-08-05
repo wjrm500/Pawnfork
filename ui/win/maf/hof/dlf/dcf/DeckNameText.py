@@ -2,6 +2,7 @@ import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
 from ui.ColorConsts import ColorConsts
+from ui.FontFamilyConsts import FontFamilyConsts
 
 class DeckNameText(tk.Text):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):
@@ -10,7 +11,7 @@ class DeckNameText(tk.Text):
             background = ColorConsts.LIGHT_GREY,
             borderwidth = 0,
             height = 1,
-            font = ('Cambria', 14)
+            font = (FontFamilyConsts.MAIN_FONT_FAMILY, 14)
         )
         self.window = window
         self.insert(tk.END, deck.start_position.name)

@@ -2,6 +2,7 @@ import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
 from ui.ColorConsts import ColorConsts
+from ui.FontFamilyConsts import FontFamilyConsts
 
 class DeckDataText(tk.Text):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):
@@ -10,7 +11,7 @@ class DeckDataText(tk.Text):
             background = ColorConsts.LIGHT_GREY,
             borderwidth = 0,
             height = 1,
-            font = ('Cambria', 10)
+            font = (FontFamilyConsts.MAIN_FONT_FAMILY, 10)
         )
         self.window = window
         deck_text = f'Colour: {deck.player_colour} - Turn Depth: {deck.turn_depth} - Response Depth: {deck.response_depth}'

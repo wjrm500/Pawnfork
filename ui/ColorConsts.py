@@ -3,4 +3,4 @@ class ColorConsts:
     LIGHT_GREY = '#E8E8E8'
     WHITE = '#FFFFFF'
     BLACK = '#000000'
-    LIME_GREEN = '#32CD32'
+    GREEN = '#92D050'

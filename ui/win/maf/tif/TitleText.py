@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from ui.ColorConsts import ColorConsts
+from ui.FontFamilyConsts import FontFamilyConsts
 
 class TitleText(tk.Text):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
@@ -9,7 +10,7 @@ class TitleText(tk.Text):
             background = ColorConsts.MEDIUM_GREY,
             borderwidth = 0,
             height = 1,
-            font = ('Cambria', 48),
+            font = (FontFamilyConsts.TITLE_FONT_FAMILY, 48),
         )
         self.window = window
         self.tag_configure('justify_center', justify = 'center')

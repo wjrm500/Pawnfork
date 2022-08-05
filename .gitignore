@@ -4,3 +4,4 @@ todos.txt
 **/__pycache__
 *.drawio
 static/
+*.db

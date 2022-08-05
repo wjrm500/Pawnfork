@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from ui.ColorConsts import ColorConsts
+from ui.FontFamilyConsts import FontFamilyConsts
 
 class SubtitleText(tk.Text):
     def __init__(self, window: tk.Tk, master: tk.Frame):
@@ -9,7 +10,7 @@ class SubtitleText(tk.Text):
             background = ColorConsts.WHITE,
             borderwidth = 0,
             height = 1,
-            font = ('Cambria', 16),
+            font = (FontFamilyConsts.MAIN_FONT_FAMILY, 16),
         )
         self.window = window
         self.tag_configure('justify_center', justify = 'center')
