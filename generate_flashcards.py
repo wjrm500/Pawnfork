@@ -1,13 +1,13 @@
 from stockfish import Stockfish
 
 from logic.consts.filepaths import STOCKFISH_FILEPATH
-import logic.consts.positions as positions
+import logic.consts.start_positions as start_positions
 from logic.enums.Colour import Colour
 from logic.study.DeckGenerator import DeckGenerator
 
 stockfish = Stockfish(STOCKFISH_FILEPATH)
 deck_generator = DeckGenerator(
-    start_position = positions.ITALIAN_GAME,
+    start_position_dict = start_positions.ITALIAN_GAME,
     turn_depth = 2,
     response_depth = 2,
     player_colour = Colour.WHITE

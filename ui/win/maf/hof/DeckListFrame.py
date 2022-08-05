@@ -16,7 +16,7 @@ class DeckListFrame(tk.Frame):
         self.window = window
         self.subtitle_text = SubtitleText(self.window, self)
         self.deck_card_frames = []
-        for _ in range(5):
-            self.deck_card_frames.append(DeckCardFrame(self.window, self))
+        for deck in self.window.database.get_decks():
+            self.deck_card_frames.append(DeckCardFrame(self.window, self, deck))
         self.create_deck_button = CreateDeckButton(self.window, self)
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))

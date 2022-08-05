@@ -1,31 +1,34 @@
 from stockfish import Stockfish
-from typing import List
+from typing import Dict, List
 
 from logic.enums.Colour import Colour
 from logic.study.sqlalchemy.Database import Database
 from logic.study.sqlalchemy.Deck import Deck
 
 class DeckGenerator:
-    def __init__(self, start_position: List, turn_depth: int, response_depth: int, player_colour = Colour.WHITE) -> None:
+    def __init__(self, start_position_dict: Dict, turn_depth: int, response_depth: int, player_colour = Colour.WHITE) -> None:
         self.database = Database()
-        self.start_position = start_position
+        self.start_position = self.database.get_start_position(start_position_dict['name'])
         self.turn_depth = turn_depth
         self.response_depth = response_depth
         self.player_colour = player_colour
     
     def estimate_flashcard_number(self) -> int:
         num_flashcards = sum([self.response_depth ** n for n in range(self.turn_depth)])
-        colour_to_move = Colour.WHITE if len(self.start_position) % 2 == 0 else Colour.BLACK
+        colour_to_move = Colour.WHITE if len(self.start_position.moves) % 2 == 0 else Colour.BLACK
         player_to_move = colour_to_move == self.player_colour
         return num_flashcards if player_to_move else num_flashcards * self.response_depth
     
     def generate(self, stockfish: Stockfish) -> Deck:
         self.deck = self.database.persist_deck(
-            '[{}]'.format(','.join(self.start_position)),
-            self.player_colour.value
+            self.start_position.id,
+            self.player_colour.value,
+            self.turn_depth,
+            self.response_depth
         )
         self.database.commit() # To access the ID
-        self.generate_flashcards(stockfish, self.start_position, self.turn_depth, self.response_depth, self.player_colour)
+        position = [move.definition for move in self.start_position.moves]
+        self.generate_flashcards(stockfish, position, self.turn_depth, self.response_depth, self.player_colour)
         self.database.commit()
         return self.deck
 
