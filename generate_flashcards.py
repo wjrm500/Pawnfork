@@ -4,9 +4,7 @@ from logic.consts.filepaths import STOCKFISH_FILEPATH
 import logic.consts.positions as positions
 from logic.enums.Colour import Colour
 from logic.study.DeckGenerator import DeckGenerator
-from logic.study.SQLite import SQLite
 
-database = SQLite()
 stockfish = Stockfish(STOCKFISH_FILEPATH)
 deck_generator = DeckGenerator(
     start_position = positions.ITALIAN_GAME,
@@ -17,8 +15,7 @@ deck_generator = DeckGenerator(
 num_flashcards = deck_generator.estimate_flashcard_number()
 print(f'Generating up to {num_flashcards} flashcards...')
 deck = deck_generator.generate(stockfish)
-database.persist_deck(deck)
 
-sorted_flashcards = sorted(deck, key = lambda x: len(x.position))
+sorted_flashcards = sorted(deck.flashcards, key = lambda x: len(x.position))
 for i, flashcard in enumerate(sorted_flashcards, 1):
     print(str(i) + ': ' + str(flashcard.position) + ' | ' + flashcard.your_best_move)

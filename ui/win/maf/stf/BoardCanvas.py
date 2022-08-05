@@ -6,11 +6,12 @@ from logic.board.pieces import *
 from ui.ColorConsts import ColorConsts
 
 class BoardCanvas(tk.Canvas):
-    def __init__(self, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
             background = ColorConsts.BACKGROUND_COLOR
         )
+        self.window = window
         self.dimension = 500
         self.config(height = self.dimension, width = self.dimension)
         self.images = []

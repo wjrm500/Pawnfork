@@ -1,13 +1,15 @@
 import tkinter as tk
 
 from logic.board.pieces import *
+from logic.study.sqlalchemy.Database import Database
 from ui.win.MainFrame import MainFrame
 
 class Window(tk.Tk):
-    def __init__(self) -> None:
+    def __init__(self, database: Database) -> None:
         super().__init__()
+        self.database = database
         self.title('Pawnfork')
-        self.frame = MainFrame(self)
+        self.frame = MainFrame(self, self)
         self.dimension = 750
         self.center()
         

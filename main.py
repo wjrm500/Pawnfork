@@ -2,6 +2,7 @@ from stockfish import Stockfish
 
 from logic.board.Board import Board
 from logic.board.Square import Square
+from logic.study.SQLite import SQLite
 from ui.Window import Window
 
 board = Board()
@@ -18,6 +19,7 @@ for move in ITALIAN_GAME:
     from_square_str, to_square_str = move[:2], move[2:]
     board.get_square(from_square_str).piece.move(board.get_square(to_square_str))
 
-window = Window()
+database = SQLite()
+window = Window(database)
 # window.frame.frame.canvas.add_pieces(board.pieces)
 window.run()

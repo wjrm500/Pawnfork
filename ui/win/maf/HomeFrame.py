@@ -4,10 +4,11 @@ from ui.ColorConsts import ColorConsts
 from ui.win.maf.hof.DeckListFrame import DeckListFrame
 
 class HomeFrame(tk.Frame):
-    def __init__(self, master: tk.Tk) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
         super().__init__(
             master,
             background = ColorConsts.BACKGROUND_COLOR
         )
-        self.deck_list_frame = DeckListFrame(self)
+        self.window = window
+        self.deck_list_frame = DeckListFrame(self.window, self)
         self.pack(fill = tk.BOTH, expand = True)

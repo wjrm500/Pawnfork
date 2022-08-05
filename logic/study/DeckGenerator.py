@@ -2,11 +2,12 @@ from stockfish import Stockfish
 from typing import List
 
 from logic.enums.Colour import Colour
-from logic.study.Flashcard import Flashcard
-from logic.study.Deck import Deck
+from logic.study.sqlalchemy.Database import Database
+from logic.study.sqlalchemy.Deck import Deck
 
 class DeckGenerator:
     def __init__(self, start_position: List, turn_depth: int, response_depth: int, player_colour = Colour.WHITE) -> None:
+        self.database = Database()
         self.start_position = start_position
         self.turn_depth = turn_depth
         self.response_depth = response_depth
@@ -19,8 +20,13 @@ class DeckGenerator:
         return num_flashcards if player_to_move else num_flashcards * self.response_depth
     
     def generate(self, stockfish: Stockfish) -> Deck:
-        self.deck = Deck(self.start_position, self.player_colour)
+        self.deck = self.database.persist_deck(
+            '[{}]'.format(','.join(self.start_position)),
+            self.player_colour.value
+        )
+        self.database.commit() # To access the ID
         self.generate_flashcards(stockfish, self.start_position, self.turn_depth, self.response_depth, self.player_colour)
+        self.database.commit()
         return self.deck
 
     def generate_flashcards(self, stockfish: Stockfish, position: List, turn_depth: int, response_depth: int, player_colour: Colour = Colour.WHITE) -> None:
@@ -32,8 +38,12 @@ class DeckGenerator:
         if player_to_move:
             top_moves = stockfish.get_top_moves(1)
             top_move = top_moves[0]
-            flashcard = Flashcard(position, top_move['Move'])
-            self.deck.add_flashcard(flashcard)
+            self.database.persist_flashcard(
+                self.deck.id,
+                '[{}]'.format(','.join(position)),
+                position[-1] if len(position) > 0 else '',
+                top_move['Move']
+            )
             turn_depth -= 1
             new_position = position + [top_move['Move']]
             self.generate_flashcards(stockfish, new_position, turn_depth, response_depth, player_colour)
