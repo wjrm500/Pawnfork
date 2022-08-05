@@ -6,7 +6,7 @@ class TitleText(tk.Text):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
-            background = ColorConsts.BACKGROUND_COLOR,
+            background = ColorConsts.MEDIUM_GREY,
             borderwidth = 0,
             height = 1,
             font = ('Cambria', 48),

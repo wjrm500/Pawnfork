@@ -7,7 +7,7 @@ class TitleFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
         super().__init__(
             master,
-            background = ColorConsts.BACKGROUND_COLOR,
+            background = ColorConsts.MEDIUM_GREY,
             height = 1,
             pady = 25
         )

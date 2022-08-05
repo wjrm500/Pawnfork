@@ -7,7 +7,7 @@ class HomeFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
         super().__init__(
             master,
-            background = ColorConsts.BACKGROUND_COLOR
+            background = ColorConsts.MEDIUM_GREY
         )
         self.window = window
         self.deck_list_frame = DeckListFrame(self.window, self)

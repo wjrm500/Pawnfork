@@ -9,7 +9,7 @@ class BoardCanvas(tk.Canvas):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
-            background = ColorConsts.BACKGROUND_COLOR
+            background = ColorConsts.MEDIUM_GREY
         )
         self.window = window
         self.dimension = 500
