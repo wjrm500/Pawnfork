@@ -19,5 +19,5 @@ for move in ITALIAN_GAME:
 
 database = Database()
 window = Window(database)
-# window.frame.frame.canvas.add_pieces(board.pieces)
+# window.main_frame.frame.canvas.add_pieces(board.pieces)
 window.run()

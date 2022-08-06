@@ -9,11 +9,16 @@ class MainFrame(tk.Frame):
         super().__init__(master)
         self.window = window
         self.title_frame = TitleFrame(self.window, self)
+        self.frame = None
         self.set_frame_to_home()
         self.pack(fill = tk.BOTH, expand = True)
     
     def set_frame_to_home(self) -> None:
+        if self.frame is not None:
+            self.frame.destroy()
         self.frame = HomeFrame(self.window, self)
     
     def set_frame_to_study(self) -> None:
+        if self.frame is not None:
+            self.frame.destroy()
         self.frame = StudyFrame(self.window, self)

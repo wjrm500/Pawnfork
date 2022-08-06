@@ -19,10 +19,15 @@ class DeckCardFrame(tk.Frame):
         self.deck_data_text = DeckDataText(self.window, self, self.deck)
         self.pack(fill = tk.X, padx = 25, pady = 25)
         self.add_hover_event()
+        self.add_click_event()
     
     def add_hover_event(self) -> None:
         self.bind('<Enter>', self.enter_handler)
         self.bind('<Leave>', self.leave_handler)
+    
+    def add_click_event(self) -> None:
+        for widget in (self, self.deck_name_text, self.deck_data_text):
+            widget.bind('<Button-1>', self.click_handler)
     
     def enter_handler(self, event) -> None:
         self.window.configure(cursor = 'hand2')
@@ -35,4 +40,5 @@ class DeckCardFrame(tk.Frame):
             widget.configure(background = ColorConsts.LIGHT_GREY)
     
     def click_handler(self, event) -> None:
-        pass
+        self.window.configure(cursor = 'arrow')
+        self.window.main_frame.set_frame_to_study()

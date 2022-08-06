@@ -5,11 +5,13 @@ from logic.study.sqlalchemy.Database import Database
 from ui.win.MainFrame import MainFrame
 
 class Window(tk.Tk):
+    main_frame: MainFrame
+
     def __init__(self, database: Database) -> None:
         super().__init__()
         self.database = database
         self.title('Pawnfork')
-        self.frame = MainFrame(self, self)
+        self.main_frame = MainFrame(self, self)
         self.dimension = 750
         self.center()
         
