@@ -3,7 +3,7 @@ import tkinter as tk
 from ui.ColorConsts import ColorConsts
 from ui.FontFamilyConsts import FontFamilyConsts
 
-class SubtitleText(tk.Text):
+class SubtitleText(tk.Label):
     def __init__(self, window: tk.Tk, master: tk.Frame):
         super().__init__(
             master,
@@ -13,7 +13,5 @@ class SubtitleText(tk.Text):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 16),
         )
         self.window = window
-        self.tag_configure('justify_center', justify = 'center')
-        self.insert(tk.END, 'Click a deck to study!')
-        self.config(state = tk.DISABLED)
-        self.pack(fill = tk.X, padx = 25, pady = (25, 0))
+        self.configure(text = 'Click a deck to study!')
+        self.pack(anchor = tk.W, padx = 25, pady = (25, 0))
