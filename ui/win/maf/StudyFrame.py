@@ -21,3 +21,8 @@ class StudyFrame(tk.Frame):
         self.canvas.add_pieces(self.board.pieces)
         self.under_canvas_text = UnderCanvasText(self.window, self, self.flashcard)
         self.pack(fill = tk.BOTH, expand = True)
+    
+    def move(self, move: str) -> None:
+        best_move = self.board.move(move)
+        text = 'Correct - you found the best move!' if move == best_move else f'Incorrect - the best move is {best_move}.'
+        self.under_canvas_text.configure(text = text)

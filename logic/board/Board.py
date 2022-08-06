@@ -69,7 +69,7 @@ class Board:
         self.add_piece(Knight, Colour.BLACK, self.get_square('g8'))
         self.add_piece(Rook, Colour.BLACK, self.get_square('h8'))
     
-    def move(self, move_str: str):
+    def move(self, move_str: str) -> str:
         from_square_str, to_square_str = move_str[:2], move_str[2:]
         from_square = self.get_square(from_square_str)
         piece_on_square = from_square.piece
@@ -80,4 +80,6 @@ class Board:
             raise Exception(f'Move invalid')
         to_square = self.get_square(to_square_str)
         piece_on_square.move(to_square)
+        best_move = self.stockfish.get_best_move()
         self.stockfish.make_moves_from_current_position([move_str])
+        return best_move
