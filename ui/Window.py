@@ -29,9 +29,3 @@ class Window(tk.Tk):
 
     def run(self) -> None:
         self.mainloop()
-    
-    def retag(self, tag, *args):
-        # Courtesy of https://stackoverflow.com/questions/11456631/how-to-capture-events-on-tkinter-child-widgets
-        # Add the given tag as the first bindtag for every widget passed in
-        for widget in args:
-            widget.bindtags((tag,) + widget.bindtags())
