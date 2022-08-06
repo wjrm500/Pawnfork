@@ -100,4 +100,4 @@ class BoardCanvas(tk.Canvas):
                 self.move_piece(rook_from_square, rook_to_square, castle_castling = True)
 
             # Update backend
-            self.master.move(move)
+            self.master.move_piece(move)

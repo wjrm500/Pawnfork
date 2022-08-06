@@ -16,7 +16,7 @@ class Board:
                 self.add_square(square)
         self.add_pieces()
         for move in position.strip('[]').split(','):
-            self.move(move)
+            self.move_piece(move)
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:
@@ -69,7 +69,7 @@ class Board:
         self.add_piece(Knight, Colour.BLACK, self.get_square('g8'))
         self.add_piece(Rook, Colour.BLACK, self.get_square('h8'))
     
-    def move(self, move_str: str) -> str:
+    def move_piece(self, move_str: str) -> str:
         from_square_str, to_square_str = move_str[:2], move_str[2:]
         from_square = self.get_square(from_square_str)
         piece_on_square = from_square.piece
