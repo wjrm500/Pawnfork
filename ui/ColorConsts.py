@@ -4,3 +4,4 @@ class ColorConsts:
     WHITE = '#FFFFFF'
     BLACK = '#000000'
     GREEN = '#92D050'
+    DARK_GREEN = '#75B530'
