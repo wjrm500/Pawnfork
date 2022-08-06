@@ -4,13 +4,6 @@ from logic.study.sqlalchemy.Database import Database
 from ui.Window import Window
 
 board = Board()
-squares = []
-for file in range(1, 9):
-    for rank in range(1, 9):
-        square = Square(file, rank)
-        board.add_square(square)
-    
-board.add_pieces()
 
 ITALIAN_GAME = ['e2e4', 'e7e5', 'g1f3', 'b8c6', 'f1c4']
 for move in ITALIAN_GAME:

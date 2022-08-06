@@ -41,4 +41,4 @@ class DeckCardFrame(tk.Frame):
     
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
-        self.window.main_frame.set_frame_to_study()
+        self.window.main_frame.set_frame_to_study(self.deck)

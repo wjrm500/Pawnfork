@@ -10,6 +10,11 @@ class Board:
         self.stockfish = Stockfish(path = STOCKFISH_FILEPATH)
         self.squares = {}
         self.pieces = []
+        for file in range(1, 9):
+            for rank in range(1, 9):
+                square = Square(file, rank)
+                self.add_square(square)
+        self.add_pieces()
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:
