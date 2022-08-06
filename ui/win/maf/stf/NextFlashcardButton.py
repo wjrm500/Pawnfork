@@ -15,7 +15,7 @@ class NextFlashcardButton(tk.Button):
         )
         self.window = window
         self.configure(text = 'Next flashcard')
-        self.pack(fill = tk.X, padx = 25)
+        self.pack()
         self.bind('<Enter>', self.enter_handler)
         self.bind('<Leave>', self.leave_handler)
         self.bind('<Button-1>', self.click_handler)
