@@ -16,4 +16,4 @@ class SubtitleText(tk.Text):
         self.tag_configure('justify_center', justify = 'center')
         self.insert(tk.END, 'Click a deck to study!')
         self.config(state = tk.DISABLED)
-        self.pack(padx = 25, pady = (25, 0))
+        self.pack(fill = tk.X, padx = 25, pady = (25, 0))

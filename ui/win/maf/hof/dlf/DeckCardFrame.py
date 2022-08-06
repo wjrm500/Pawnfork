@@ -17,4 +17,22 @@ class DeckCardFrame(tk.Frame):
         self.deck = deck
         self.deck_name_text = DeckNameText(self.window, self, self.deck)
         self.deck_data_text = DeckDataText(self.window, self, self.deck)
-        self.pack(padx = 25, pady = 25)
+        self.pack(fill = tk.X, padx = 25, pady = 25)
+        self.add_hover_event()
+    
+    def add_hover_event(self) -> None:
+        self.bind('<Enter>', self.enter_handler)
+        self.bind('<Leave>', self.leave_handler)
+    
+    def enter_handler(self, event) -> None:
+        self.window.configure(cursor = 'hand2')
+        for widget in (self, self.deck_name_text, self.deck_data_text):
+            widget.configure(background = ColorConsts.MEDIUM_GREY)
+    
+    def leave_handler(self, event) -> None:
+        self.window.configure(cursor = 'arrow')
+        for widget in (self, self.deck_name_text, self.deck_data_text):
+            widget.configure(background = ColorConsts.LIGHT_GREY)
+    
+    def click_handler(self, event) -> None:
+        pass
