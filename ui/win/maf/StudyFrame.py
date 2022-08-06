@@ -5,6 +5,7 @@ from logic.study.sqlalchemy.Deck import Deck
 from logic.study.sqlalchemy.Flashcard import Flashcard
 from ui.ColorConsts import ColorConsts
 from ui.win.maf.stf.BoardCanvas import BoardCanvas
+from ui.win.maf.stf.UnderCanvasText import UnderCanvasText
 
 class StudyFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk, deck: Deck) -> None:
@@ -15,10 +16,8 @@ class StudyFrame(tk.Frame):
         self.window = window
         self.deck = deck
         self.flashcard = self.deck.get_random_flashcard()
-
         self.board = Board(self.flashcard.position)
-        
         self.canvas = BoardCanvas(self.window, self)
         self.canvas.add_pieces(self.board.pieces)
-
+        self.under_canvas_text = UnderCanvasText(self.window, self, self.flashcard)
         self.pack(fill = tk.BOTH, expand = True)

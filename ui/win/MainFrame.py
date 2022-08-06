@@ -11,8 +11,8 @@ class MainFrame(tk.Frame):
         self.window = window
         self.title_frame = TitleFrame(self.window, self)
         self.frame = None
-        # self.set_frame_to_home()
-        self.set_frame_to_study(self.window.database.get_decks()[0])
+        self.set_frame_to_home()
+        # self.set_frame_to_study(self.window.database.get_decks()[0])
         self.pack(fill = tk.BOTH, expand = True)
     
     def set_frame_to_home(self) -> None:
