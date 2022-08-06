@@ -29,4 +29,5 @@ class NextFlashcardButton(tk.Button):
         self.configure(background = ColorConsts.GREEN)
 
     def click_handler(self, event) -> None:
+        self.window.configure(cursor = 'arrow')
         self.master.load_new_flashcard()
