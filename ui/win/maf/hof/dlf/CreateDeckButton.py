@@ -15,3 +15,13 @@ class CreateDeckButton(tk.Button):
         self.window = window
         self.configure(text = 'Create a new deck')
         self.pack(fill = tk.X, padx = 25)
+        self.bind('<Enter>', self.enter_handler)
+        self.bind('<Leave>', self.leave_handler)
+    
+    def enter_handler(self, event) -> None:
+        self.window.configure(cursor = 'hand2')
+        self.configure(background = ColorConsts.DARK_GREEN)
+    
+    def leave_handler(self, event) -> None:
+        self.window.configure(cursor = 'arrow')
+        self.configure(background = ColorConsts.GREEN)
