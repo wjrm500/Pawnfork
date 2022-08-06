@@ -10,8 +10,8 @@ class Square:
         self.set_geometry()
         self.piece = None
     
-    def __repr__(self) -> str:
-        return f'{self.file}{self.rank}'
+    def __str__(self) -> str:
+        return f'{self.file_name}{self.rank_name}'
     
     def set_geometry(self):
         self.x_min = self.file - 1

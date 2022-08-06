@@ -1,4 +1,7 @@
+import math
+import string
 from PIL import ImageTk, Image
+import re
 import tkinter as tk
 from typing import List
 
@@ -36,13 +39,44 @@ class BoardCanvas(tk.Canvas):
             image = ImageTk.PhotoImage(image)
             self.images.append(image)
             piece_element = self.create_image(real_x, real_y, anchor = tk.CENTER, image = image)
-            self.addtag_withtag(f'type_{piece.__class__.__name__}', piece_element)
+            self.addtag_withtag(f'square_{str(piece.square)}', piece_element)
             self.piece_elements.append(piece_element)
         for piece_element in self.piece_elements:
             self.tag_bind(piece_element, '<Button-1>', self.piece_mousedown_handler)
-            self.tag_bind(piece_element, '<ButtonRelease-1>', lambda e: self.unbind('<Motion>'))
+            self.tag_bind(piece_element, '<ButtonRelease-1>', self.piece_mouseup_handler)
     
     def piece_mousedown_handler(self, event) -> None:
-        piece_type = next(filter(lambda x: x.startswith('type_'), self.gettags(self.find_closest(event.x, event.y)))).split('_')[1]
-        element_to_move = self.find_closest(event.x, event.y)
-        self.bind('<Motion>', lambda e: self.moveto(element_to_move, e.x - (self.piece_image_dimension / 2), e.y - (self.piece_image_dimension / 2)))
+        self.from_square = next(filter(lambda x: x.startswith('square_'), self.gettags(self.find_closest(event.x, event.y)))).split('_')[1]
+        self.moving_element = self.find_closest(event.x, event.y)
+        self.bind('<Motion>', lambda e: self.moveto(self.moving_element, e.x - (self.piece_image_dimension / 2), e.y - (self.piece_image_dimension / 2)))
+    
+    def piece_mouseup_handler(self, event) -> None:
+        self.unbind('<Motion>')
+        real_x, real_y = event.x, event.y
+        virtual_x, virtual_y = real_x / self.dimension * 8, real_y / self.dimension * 8
+        to_square = self.get_square_from_virtual_coords(virtual_x, virtual_y)
+        move = f'{self.from_square}{to_square}'
+        move_valid = self.master.board.stockfish.is_move_correct(move)
+        to_square = to_square if move_valid else self.from_square
+        self.move_piece(self.from_square, to_square)
+    
+    def get_square_from_virtual_coords(self, virtual_x: int, virtual_y: int) -> None:
+        file_name = string.ascii_lowercase[math.floor(virtual_x)]
+        rank_name = list(reversed(range(1, 9)))[math.floor(virtual_y)]
+        return f'{file_name}{rank_name}'
+    
+    def move_piece(self, from_square: str, to_square: str) -> None:
+        move = f'{from_square}{to_square}'
+        virtual_x = string.ascii_lowercase.index(to_square[0]) + 0.5
+        virtual_y = list(reversed(range(1, 9)))[int(to_square[1]) - 1] - 0.5
+        real_x, real_y = virtual_x * self.dimension / 8, virtual_y * self.dimension / 8
+        real_x, real_y = real_x - (self.piece_image_dimension / 2), real_y - (self.piece_image_dimension / 2)
+        real_y += self.dimension / 75
+        self.moveto(self.moving_element, real_x, real_y)
+        move_capture = self.master.board.stockfish.will_move_be_a_capture(move) # Anything but Stockfish.Capture.NO_CAPTURE
+        if move_capture.name != 'NO_CAPTURE':
+            captured_piece_element = self.find_withtag(f'square_{to_square}')
+            self.delete(captured_piece_element)
+        self.itemconfig(self.moving_element, tags = (f'square_{to_square}', 'current'))
+        self.master.board.move(move)
+        # Need to handle castling

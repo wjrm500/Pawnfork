@@ -15,12 +15,8 @@ class Board:
                 square = Square(file, rank)
                 self.add_square(square)
         self.add_pieces()
-        # for move in position.moves:
-        #     self.get_square(move.from_square()).piece.move(self.board.get_square(move.to_square()))
         for move in position.strip('[]').split(','):
-            from_square = move[:2]
-            to_square = move[2:]
-            self.get_square(from_square).piece.move(self.get_square(to_square))
+            self.move(move)
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:
@@ -84,4 +80,4 @@ class Board:
             raise Exception(f'Move invalid')
         to_square = self.get_square(to_square_str)
         piece_on_square.move(to_square)
-        self.stockfish.make_moves_from_current_position(move_str)
+        self.stockfish.make_moves_from_current_position([move_str])
