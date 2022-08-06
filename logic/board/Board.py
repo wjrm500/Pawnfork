@@ -6,7 +6,7 @@ from logic.enums.Colour import Colour
 from logic.consts.filepaths import STOCKFISH_FILEPATH
 
 class Board:
-    def __init__(self) -> None:
+    def __init__(self, position: str) -> None:
         self.stockfish = Stockfish(path = STOCKFISH_FILEPATH)
         self.squares = {}
         self.pieces = []
@@ -15,6 +15,12 @@ class Board:
                 square = Square(file, rank)
                 self.add_square(square)
         self.add_pieces()
+        # for move in position.moves:
+        #     self.get_square(move.from_square()).piece.move(self.board.get_square(move.to_square()))
+        for move in position.strip('[]').split(','):
+            from_square = move[:2]
+            to_square = move[2:]
+            self.get_square(from_square).piece.move(self.get_square(to_square))
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:

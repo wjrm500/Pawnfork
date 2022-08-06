@@ -1,6 +1,8 @@
+import random
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
+from logic.study.sqlalchemy.Flashcard import Flashcard
 from logic.study.sqlalchemy import Base
 
 class Deck(Base):
@@ -14,3 +16,6 @@ class Deck(Base):
 
     ### One to many relationships
     flashcards = relationship('Flashcard', backref = 'deck')
+
+    def get_random_flashcard(self) -> Flashcard:
+        return random.choice(self.flashcards)

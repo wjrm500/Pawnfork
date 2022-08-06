@@ -2,6 +2,7 @@ import tkinter as tk
 
 from logic.board.Board import Board
 from logic.study.sqlalchemy.Deck import Deck
+from logic.study.sqlalchemy.Flashcard import Flashcard
 from ui.ColorConsts import ColorConsts
 from ui.win.maf.stf.BoardCanvas import BoardCanvas
 
@@ -13,10 +14,9 @@ class StudyFrame(tk.Frame):
         )
         self.window = window
         self.deck = deck
+        self.flashcard = self.deck.get_random_flashcard()
 
-        self.board = Board()
-        for move in deck.start_position.moves:
-            self.board.get_square(move.from_square()).piece.move(self.board.get_square(move.to_square()))
+        self.board = Board(self.flashcard.position)
         
         self.canvas = BoardCanvas(self.window, self)
         self.canvas.add_pieces(self.board.pieces)

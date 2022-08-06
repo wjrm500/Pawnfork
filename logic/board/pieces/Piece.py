@@ -6,9 +6,10 @@ class Piece:
         self.colour = colour
         self.square = square
 
-    def image_filepath(self):
+    def image_filepath(self) -> str:
         piece_name = self.__class__.__name__.lower()
-        return f'./static/images/pieces/originals/{self.colour.value}/{piece_name}.png'
+        return f'./static/images/pieces/unicode/{self.colour.value}/{piece_name}.png'
     
-    def move(self, square):
+    def move(self, square: Square) -> None:
         self.square = square
+        square.piece = self

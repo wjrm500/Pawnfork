@@ -28,16 +28,9 @@ class BoardCanvas(tk.Canvas):
         for piece in pieces:
             virtual_x, virtual_y = piece.square.centre
             real_x, real_y = virtual_x * self.dimension / 8, virtual_y * self.dimension / 8
+            real_y += self.dimension / 75 # This accounts for the fact that for some reason pieces in images are not centered
             image = Image.open(piece.image_filepath())
-            image_dimension_dict = {
-                Bishop: 15,
-                King: 10,
-                Knight: 16,
-                Pawn: 20,
-                Queen: 10,
-                Rook: 18
-            }
-            image_dimension = int(self.dimension / image_dimension_dict[piece.__class__])
+            image_dimension = int(self.dimension / 6)
             image = image.resize((image_dimension, image_dimension))
             image = ImageTk.PhotoImage(image)
             self.images.append(image)
