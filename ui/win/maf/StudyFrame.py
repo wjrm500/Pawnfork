@@ -1,8 +1,9 @@
+from playsound import playsound
 import tkinter as tk
+import winsound
 
 from logic.board.Board import Board
 from logic.study.sqlalchemy.Deck import Deck
-from logic.study.sqlalchemy.Flashcard import Flashcard
 from ui.ColorConsts import ColorConsts
 from ui.win.maf.stf.BoardCanvas import BoardCanvas
 from ui.win.maf.stf.NextFlashcardButton import NextFlashcardButton
@@ -39,6 +40,9 @@ class StudyFrame(tk.Frame):
     
     def move_piece(self, move: str) -> None:
         best_move = self.board.move_piece(move)
-        text = 'Correct - you found the best move!' if move == best_move else f'Incorrect - the best move is {best_move}.'
+        correct = move == best_move
+        sound_filename = 'correct' if correct else 'incorrect'
+        winsound.PlaySound(f'static\sounds\{sound_filename}.wav', winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
+        text = 'Correct - you found the best move!' if correct else f'Incorrect - the best move is {best_move}.'
         self.under_canvas_text.configure(text = text)
         self.next_flashcard_button.pack(fill = tk.X, padx = 25)
