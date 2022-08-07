@@ -41,11 +41,6 @@ class DeckFormFrame(tk.Frame):
         self.creating_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
     
-    def show_error(self, text: str) -> None:
-        self.post_submit_text.configure(foreground = ColorConsts.ERROR)
-        self.post_submit_text.configure(text = text)
-        self.post_submit_text.pack()
-    
     def instantiate_deck_generator(self, opening: str, turn_depth: int, response_depth: int) -> None:
         deck_position_dict = next(filter(lambda x: x['name'] == opening, deck_positions.values()))
         self.deck_generator = DeckGenerator(
@@ -55,7 +50,8 @@ class DeckFormFrame(tk.Frame):
             player_colour = Colour.WHITE # TODO: support black
         )
     
-    def show_estimated_flashcard_number(self, estimated_flashcard_number: str) -> None:
+    def handle_successful_form_submit(self) -> None:
+        estimated_flashcards = self.deck_generator.estimate_flashcard_number()
         for widget in (
             self.opening_field_frame.field,
             self.turn_depth_field_frame.field,
@@ -63,12 +59,7 @@ class DeckFormFrame(tk.Frame):
             self.create_deck_button
             ):
             widget.configure(state = tk.DISABLED)
-        self.post_submit_text.configure(foreground = ColorConsts.BLACK)
-        estimated_minutes_taken = math.ceil(estimated_flashcard_number / 3 / 60)
-        add_s = '' if estimated_minutes_taken == 1 else 's'
-        text = f'Up to {estimated_flashcard_number} flashcards may be created. This could take up to {estimated_minutes_taken} minute{add_s}.'
-        self.post_submit_text.configure(text = text)
-        self.post_submit_text.pack()
+        self.post_submit_text.show_estimated_flashcards(estimated_flashcards)
         self.confirm_cancel_frame.pack()
     
     def handle_create(self, event) -> None:
@@ -77,20 +68,20 @@ class DeckFormFrame(tk.Frame):
         response_depth = self.response_depth_field_frame.field.get()
         error_messages = []
         error_messages = self.validate_opening(error_messages, opening)
-        error_messages = self.validate_depth(error_messages, turn_depth, 'Turn')
-        error_messages = self.validate_depth(error_messages, response_depth, 'Response')
+        error_messages = self.validate_depth(error_messages, turn_depth, 'Turn depth')
+        error_messages = self.validate_depth(error_messages, response_depth, 'Response depth')
         if len(error_messages):
             error_message = '\n'.join(error_messages)
-            self.show_error(error_message)
+            self.post_submit_text.show_error(error_message)
         else:
             existing_decks = self.window.database.get_decks()
             for existing_deck in existing_decks:
                 if opening == existing_deck.name and int(turn_depth) == existing_deck.turn_depth and int(response_depth) == existing_deck.response_depth:
-                    self.show_error('A Deck with this exact configuration already exists!')
+                    self.post_submit_text.show_error(PostSubmitText.ERROR_DECK_EXISTS)
                     break
             else:
                 self.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
-                self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
+                self.handle_successful_form_submit()
     
     def handle_confirm(self, event) -> None:
         self.creating_text.pack()
@@ -116,12 +107,12 @@ class DeckFormFrame(tk.Frame):
             error_messages.append('Opening is required')
         return error_messages
     
-    def validate_depth(self, error_messages: List[str], depth: int, type: Literal['Turn', 'Response']) -> None:
+    def validate_depth(self, error_messages: List[str], depth: int, depth_type: Literal['Turn depth', 'Response depth']) -> None:
         if depth == '':
-            return error_messages + [f'{type} depth is required']
+            return error_messages + [PostSubmitText.ERROR_FIELD_REQUIRED.format(depth_type)]
         if not depth.isnumeric():
-            return error_messages + [f'{type} depth must be numeric']
+            return error_messages + [PostSubmitText.ERROR_NOT_NUMERIC.format(depth_type)]
         max_depth = 10
         if int(depth) > max_depth:
-            return error_messages + [f'{type} depth cannot exceed {max_depth}']
+            return error_messages + [PostSubmitText.ERROR_MAX_EXCEEDED.format(depth_type, max_depth)]
         return error_messages
