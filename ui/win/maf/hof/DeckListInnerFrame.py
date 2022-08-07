@@ -9,13 +9,11 @@ from ui.win.maf.hof.dlf.DeckListCanvasFrame import DeckListCanvasFrame
 from ui.win.maf.hof.dlf.DeckListScrollbar import DeckListScrollbar
 from ui.win.maf.hof.dlf.SubtitleText import SubtitleText
 
-class DeckListFrame(tk.Frame):
+class DeckListInnerFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame):
         super().__init__(
             master,
-            background = ColorConsts.WHITE,
-            highlightbackground = ColorConsts.BLACK,
-            highlightthickness = 2
+            background = ColorConsts.WHITE
         )
         self.window = window
         self.canvas = DeckListCanvas(self.window, self)
@@ -27,7 +25,7 @@ class DeckListFrame(tk.Frame):
         for deck in self.window.database.get_decks():
             self.deck_card_frames.append(DeckCardFrame(self.window, self.canvas_frame, deck))
         self.create_deck_button = CreateDeckButton(self.window, self.canvas_frame)
-        self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
+        self.pack(fill = tk.BOTH, expand = True)
         for widget in (self.canvas_frame, self.subtitle_text, self.create_deck_button, *self.deck_card_frames):
             widget.bind('<MouseWheel>', self.on_mousewheel)
     
