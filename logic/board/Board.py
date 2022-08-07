@@ -10,6 +10,7 @@ class Board:
         self.stockfish = Stockfish(path = filepaths.STOCKFISH)
         self.squares = {}
         self.pieces = []
+        self.position = []
         for file in range(1, 9):
             for rank in range(1, 9):
                 square = Square(file, rank)
@@ -82,4 +83,5 @@ class Board:
         piece_on_square.move(to_square)
         best_move = self.stockfish.get_best_move()
         self.stockfish.make_moves_from_current_position([move_str])
+        self.position.append(move_str)
         return best_move
