@@ -1,5 +1,4 @@
 from typing import List, Literal
-from stockfish import Stockfish
 import tkinter as tk
 
 from logic.consts.deck_positions import deck_positions
@@ -45,7 +44,6 @@ class DeckFormFrame(tk.Frame):
         self.post_submit_text.pack()
     
     def instantiate_deck_generator(self, opening: str, turn_depth: int, response_depth: int) -> None:
-        self.stockfish = Stockfish(filepaths.STOCKFISH)
         deck_position_dict = next(filter(lambda x: x['name'] == opening, deck_positions.values()))
         self.deck_generator = DeckGenerator(
             deck_position_dict = deck_position_dict,
@@ -84,7 +82,8 @@ class DeckFormFrame(tk.Frame):
             self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
     
     def handle_confirm(self, event) -> None:
-        pass
+        self.deck_generator.generate()
+        self.window.main_frame.set_frame_to_home()
 
     def handle_cancel(self, event) -> None:
         for widget in (
