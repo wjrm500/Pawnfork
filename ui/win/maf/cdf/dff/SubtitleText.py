@@ -13,6 +13,5 @@ class SubtitleText(tk.Label):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 16)
         )
         self.window = window
-        text = 'You have no decks.' if self.window.database.get_decks() == [] else 'Click a deck to study!'
-        self.configure(text = text)
+        self.configure(text = 'Create new Deck')
         self.pack(anchor = tk.W, padx = 25, pady = (25, 0))

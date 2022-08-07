@@ -1,5 +1,6 @@
 import tkinter as tk
 from logic.study.sqlalchemy.Deck import Deck
+from ui.win.maf.CreateDeckFrame import CreateDeckFrame
 
 from ui.win.maf.StudyFrame import StudyFrame
 from ui.win.maf.HomeFrame import HomeFrame
@@ -12,7 +13,6 @@ class MainFrame(tk.Frame):
         self.title_frame = TitleFrame(self.window, self)
         self.frame = None
         self.set_frame_to_home()
-        # self.set_frame_to_study(self.window.database.get_decks()[0])
         self.pack(fill = tk.BOTH, expand = True)
     
     def set_frame_to_home(self) -> None:
@@ -24,3 +24,8 @@ class MainFrame(tk.Frame):
         if self.frame is not None:
             self.frame.destroy()
         self.frame = StudyFrame(self.window, self, deck)
+    
+    def set_frame_to_create_deck(self) -> None:
+        if self.frame is not None:
+            self.frame.destroy()
+        self.frame = CreateDeckFrame(self.window, self)

@@ -14,10 +14,9 @@ class CreateDeckButton(tk.Button, AbsButton):
             borderwidth = 0
         )
         self.window = window
-        self.configure(text = 'Create a new deck')
+        self.configure(text = 'Create')
         self.pack(fill = tk.X, padx = 25, pady = (25, 0))
         AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
-        self.window.configure(cursor = 'arrow')
-        self.window.main_frame.set_frame_to_create_deck()
+        pass
