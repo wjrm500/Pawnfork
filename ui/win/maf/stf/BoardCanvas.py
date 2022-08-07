@@ -6,6 +6,7 @@ from typing import List
 
 from logic.board.pieces import *
 from ui.consts.ColorConsts import ColorConsts
+import ui.consts.filepaths as ui_filepaths
 
 class BoardCanvas(tk.Canvas):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
@@ -22,7 +23,7 @@ class BoardCanvas(tk.Canvas):
         self.pack()
     
     def add_background(self) -> None:
-        image = Image.open('./static/images/chessboard.png')
+        image = Image.open(ui_filepaths.CHESSBOARD_IMAGE)
         image = image.resize((self.dimension, self.dimension), Image.ANTIALIAS)
         self.background_image = ImageTk.PhotoImage(image)
         self.create_image(0, 0, anchor = tk.NW, image = self.background_image)

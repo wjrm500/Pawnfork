@@ -5,7 +5,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
 
 from logic.consts.start_positions import start_positions
-from logic.consts.filepaths import DATABASE_URL
+import logic.consts.filepaths as filepaths
 from logic.study.sqlalchemy import Base
 from logic.study.sqlalchemy.Flashcard import Flashcard
 from logic.study.sqlalchemy.Deck import Deck
@@ -20,7 +20,7 @@ class _Database:
     session: Session
 
     def __init__(self) -> None:
-        self.database_url = DATABASE_URL
+        self.database_url = filepaths.DATABASE
         self.engine = create_engine(self.database_url, echo = False)
         Base.metadata.create_all(self.engine, checkfirst = True)
         self.session = scoped_session(sessionmaker(bind = self.engine))

@@ -2,12 +2,12 @@ from stockfish import Stockfish
 
 from logic.board.Square import Square
 from logic.board.pieces import *
+import logic.consts.filepaths as filepaths
 from logic.enums.Colour import Colour
-from logic.consts.filepaths import STOCKFISH_FILEPATH
 
 class Board:
     def __init__(self, position: str) -> None:
-        self.stockfish = Stockfish(path = STOCKFISH_FILEPATH)
+        self.stockfish = Stockfish(path = filepaths.STOCKFISH)
         self.squares = {}
         self.pieces = []
         for file in range(1, 9):
