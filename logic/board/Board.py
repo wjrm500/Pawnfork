@@ -4,9 +4,10 @@ from logic.board.Square import Square
 from logic.board.pieces import *
 import logic.consts.filepaths as filepaths
 from logic.enums.Colour import Colour
+from logic.study.sqlalchemy.Flashcard import Flashcard
 
 class Board:
-    def __init__(self, position: str) -> None:
+    def __init__(self, flashcard: Flashcard) -> None:
         self.stockfish = Stockfish(path = filepaths.STOCKFISH)
         self.squares = {}
         self.pieces = []
@@ -16,8 +17,8 @@ class Board:
                 square = Square(file, rank)
                 self.add_square(square)
         self.add_pieces()
-        for move in position.strip('[]').split(','):
-            self.move_piece(move)
+        for move in flashcard.moves:
+            self.move_piece(move.definition)
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:

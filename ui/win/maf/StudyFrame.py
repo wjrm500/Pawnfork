@@ -25,7 +25,7 @@ class StudyFrame(tk.Frame):
     
     def load_new_flashcard(self) -> None:
         self.flashcard = self.deck.get_random_flashcard()
-        self.board = Board(self.flashcard.position)
+        self.board = Board(self.flashcard)
         if self.canvas is not None:
             self.canvas.destroy()
         self.canvas = BoardCanvas(self.window, self)
