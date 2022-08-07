@@ -1,3 +1,5 @@
+from datetime import datetime
+from time import time
 from stockfish import Stockfish
 from typing import Dict, List
 
@@ -29,7 +31,13 @@ class DeckGenerator:
             self.response_depth
         )
         self.database.commit() # To access the ID
+        self.flashcards_generated = 0
+        t1 = time()
+        print(f'The time at the beginning is: {t1}')
         self.generate_flashcards(self.deck_position_dict['moves'], self.turn_depth, self.response_depth, self.player_colour)
+        t2 = time()
+        print(f'The time at the end is: {t2}')
+        print(f'Total time taken: {t2 - t1}')
         self.database.commit()
         return self.deck
 
@@ -47,6 +55,8 @@ class DeckGenerator:
                 moves,
                 top_move['Move']
             )
+            self.flashcards_generated += 1
+            print(f'{self.flashcards_generated} flashcards generated')
             turn_depth -= 1
             new_moves = moves + [top_move['Move']]
             self.generate_flashcards(new_moves, turn_depth, response_depth, player_colour)
