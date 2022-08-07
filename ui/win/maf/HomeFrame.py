@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from ui.ColorConsts import ColorConsts
+from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.hof.DeckListFrame import DeckListFrame
 
 class HomeFrame(tk.Frame):

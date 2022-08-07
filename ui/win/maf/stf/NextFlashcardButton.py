@@ -1,8 +1,8 @@
 import tkinter as tk
 from logic.board.Board import Board
 
-from ui.ColorConsts import ColorConsts
-from ui.FontFamilyConsts import FontFamilyConsts
+from ui.consts.ColorConsts import ColorConsts
+from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class NextFlashcardButton(tk.Button):
     def __init__(self, window: tk.Tk, master: tk.Frame):

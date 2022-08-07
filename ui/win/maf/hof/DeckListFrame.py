@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from ui.ColorConsts import ColorConsts
+from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.hof.dlf.CreateDeckButton import CreateDeckButton
 from ui.win.maf.hof.dlf.DeckCardFrame import DeckCardFrame
 from ui.win.maf.hof.dlf.SubtitleText import SubtitleText

@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
-from ui.ColorConsts import ColorConsts
+from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.hof.dlf.dcf.DeckDataText import DeckDataText
 from ui.win.maf.hof.dlf.dcf.DeckNameText import DeckNameText
 

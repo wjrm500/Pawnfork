@@ -4,7 +4,7 @@ import winsound
 
 from logic.board.Board import Board
 from logic.study.sqlalchemy.Deck import Deck
-from ui.ColorConsts import ColorConsts
+from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.stf.BoardCanvas import BoardCanvas
 from ui.win.maf.stf.NextFlashcardButton import NextFlashcardButton
 from ui.win.maf.stf.UnderCanvasText import UnderCanvasText

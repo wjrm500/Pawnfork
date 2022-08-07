@@ -5,7 +5,7 @@ import tkinter as tk
 from typing import List
 
 from logic.board.pieces import *
-from ui.ColorConsts import ColorConsts
+from ui.consts.ColorConsts import ColorConsts
 
 class BoardCanvas(tk.Canvas):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:

@@ -1,8 +1,8 @@
 import tkinter as tk
 from logic.study.sqlalchemy.Flashcard import Flashcard
 
-from ui.ColorConsts import ColorConsts
-from ui.FontFamilyConsts import FontFamilyConsts
+from ui.consts.ColorConsts import ColorConsts
+from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class UnderCanvasText(tk.Label):
     def __init__(self, window: tk.Tk, master: tk.Frame, flashcard: Flashcard) -> None:

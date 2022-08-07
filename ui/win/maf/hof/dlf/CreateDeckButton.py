@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from ui.ColorConsts import ColorConsts
-from ui.FontFamilyConsts import FontFamilyConsts
+from ui.consts.ColorConsts import ColorConsts
+from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class CreateDeckButton(tk.Button):
     def __init__(self, window: tk.Tk, master: tk.Frame):
