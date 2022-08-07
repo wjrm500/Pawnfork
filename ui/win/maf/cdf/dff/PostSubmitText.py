@@ -3,12 +3,11 @@ import tkinter as tk
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
-class ErrorText(tk.Label):
+class PostSubmitText(tk.Label):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
             background = ColorConsts.WHITE,
-            foreground = 'red', # Use const,
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 12, 'bold')
         )
         self.window = window

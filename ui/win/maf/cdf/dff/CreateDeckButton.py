@@ -31,7 +31,8 @@ class CreateDeckButton(tk.Button, AbsButton):
             error_message = '\n'.join(error_messages)
             self.master.show_error(error_message)
         else:
-            pass
+            self.master.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
+            self.master.show_estimated_flashcard_number(self.master.deck_generator.estimate_flashcard_number())
     
     def validate_opening(self, error_messages: List[str], opening: str) -> str:
         if opening == '':
