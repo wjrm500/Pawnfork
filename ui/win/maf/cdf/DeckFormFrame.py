@@ -1,8 +1,8 @@
+import math
 from typing import List, Literal
 import tkinter as tk
 
 from logic.consts.deck_positions import deck_positions
-import logic.consts.filepaths as filepaths
 from logic.enums.Colour import Colour
 from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts
@@ -64,7 +64,9 @@ class DeckFormFrame(tk.Frame):
             ):
             widget.configure(state = tk.DISABLED)
         self.post_submit_text.configure(foreground = ColorConsts.BLACK)
-        text = f'Up to {estimated_flashcard_number} flashcards may be created'
+        estimated_minutes_taken = math.ceil(estimated_flashcard_number / 3 / 60)
+        add_s = '' if estimated_minutes_taken == 1 else 's'
+        text = f'Up to {estimated_flashcard_number} flashcards may be created. This could take up to {estimated_minutes_taken} minute{add_s}.'
         self.post_submit_text.configure(text = text)
         self.post_submit_text.pack()
         self.confirm_cancel_frame.pack()
