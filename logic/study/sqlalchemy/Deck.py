@@ -9,7 +9,7 @@ class Deck(Base):
     __tablename__ = 'deck'
 
     id = Column(Integer, primary_key = True, autoincrement = True)
-    start_position_id = Column(Integer, ForeignKey('start_position.id'))
+    deck_position_id = Column(Integer, ForeignKey('deck_position.id'))
     player_colour = Column(String)
     turn_depth = Column(Integer)
     response_depth = Column(Integer)

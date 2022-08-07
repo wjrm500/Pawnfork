@@ -3,12 +3,13 @@ from sqlalchemy.orm import relationship
 
 from logic.study.sqlalchemy import Base
 
-class StartPosition(Base):
-    __tablename__ = 'start_position'
+class Position(Base):
+    __tablename__ = 'position'
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String)
 
     ### One to many relationships
-    decks = relationship('Deck', backref = 'start_position')
-    moves = relationship('StartPositionMove', backref = 'start_position')
+    decks = relationship('Deck', backref = 'position')
+    flashcards = relationship('Flashcard', backref = 'position')
+    moves = relationship('PositionMove', backref = 'position')

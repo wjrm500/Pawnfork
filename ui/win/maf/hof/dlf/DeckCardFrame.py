@@ -17,7 +17,7 @@ class DeckCardFrame(tk.Frame):
         self.deck = deck
         self.deck_name_text = DeckNameText(self.window, self, self.deck)
         self.deck_data_text = DeckDataText(self.window, self, self.deck)
-        self.pack(fill = tk.X, padx = 25, pady = 25)
+        self.pack(fill = tk.X, padx = 25, pady = (25, 0))
         self.add_hover_event()
         self.add_click_event()
     

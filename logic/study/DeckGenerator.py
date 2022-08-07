@@ -6,28 +6,28 @@ from logic.study.sqlalchemy.Database import Database
 from logic.study.sqlalchemy.Deck import Deck
 
 class DeckGenerator:
-    def __init__(self, start_position_dict: Dict, turn_depth: int, response_depth: int, player_colour = Colour.WHITE) -> None:
+    def __init__(self, deck_position_dict: Dict, turn_depth: int, response_depth: int, player_colour = Colour.WHITE) -> None:
         self.database = Database()
-        self.start_position = self.database.get_start_position(start_position_dict['name'])
+        self.deck_position = self.database.get_deck_position(deck_position_dict['name'])
         self.turn_depth = turn_depth
         self.response_depth = response_depth
         self.player_colour = player_colour
     
     def estimate_flashcard_number(self) -> int:
         num_flashcards = sum([self.response_depth ** n for n in range(self.turn_depth)])
-        colour_to_move = Colour.WHITE if len(self.start_position.moves) % 2 == 0 else Colour.BLACK
+        colour_to_move = Colour.WHITE if len(self.deck_position.moves) % 2 == 0 else Colour.BLACK
         player_to_move = colour_to_move == self.player_colour
         return num_flashcards if player_to_move else num_flashcards * self.response_depth
     
     def generate(self, stockfish: Stockfish) -> Deck:
         self.deck = self.database.persist_deck(
-            self.start_position.id,
+            self.deck_position.id,
             self.player_colour.value,
             self.turn_depth,
             self.response_depth
         )
         self.database.commit() # To access the ID
-        position = [move.definition for move in self.start_position.moves]
+        position = [move.definition for move in self.deck_position.moves]
         self.generate_flashcards(stockfish, position, self.turn_depth, self.response_depth, self.player_colour)
         self.database.commit()
         return self.deck

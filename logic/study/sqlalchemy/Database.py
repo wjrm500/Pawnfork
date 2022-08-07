@@ -4,13 +4,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
 
-from logic.consts.start_positions import start_positions
+from logic.consts.deck_positions import deck_positions
 import logic.consts.filepaths as filepaths
 from logic.study.sqlalchemy import Base
 from logic.study.sqlalchemy.Flashcard import Flashcard
 from logic.study.sqlalchemy.Deck import Deck
-from logic.study.sqlalchemy.StartPosition import StartPosition
-from logic.study.sqlalchemy.StartPositionMove import StartPositionMove
+from logic.study.sqlalchemy.DeckPosition import DeckPosition
+from logic.study.sqlalchemy.DeckPositionMove import DeckPositionMove
 
 instance = None
 
@@ -24,7 +24,7 @@ class _Database:
         self.engine = create_engine(self.database_url, echo = False)
         Base.metadata.create_all(self.engine, checkfirst = True)
         self.session = scoped_session(sessionmaker(bind = self.engine))
-        self.load_start_positions_from_file()
+        self.load_deck_positions_from_file()
     
     def commit(self) -> None:
         self.session.commit()
@@ -32,24 +32,24 @@ class _Database:
     def encode_moves(self, moves: List[str]) -> str:
         return '[{}]'.format(','.join(moves))
     
-    def load_start_positions_from_file(self) -> List[StartPosition]:
-        self.session.query(StartPosition).delete()
-        self.session.query(StartPositionMove).delete()
-        for start_position_dict in start_positions.values():
-            start_position = StartPosition(name = start_position_dict['name'])
-            self.session.add(start_position)
+    def load_deck_positions_from_file(self) -> List[DeckPosition]:
+        self.session.query(DeckPosition).delete()
+        self.session.query(DeckPositionMove).delete()
+        for deck_position_dict in deck_positions.values():
+            deck_position = DeckPosition(name = deck_position_dict['name'])
+            self.session.add(deck_position)
             self.commit()
-            for move in start_position_dict['moves']:
-                start_position_move = StartPositionMove(
-                    start_position_id = start_position.id,
+            for move in deck_position_dict['moves']:
+                deck_position_move = DeckPositionMove(
+                    deck_position_id = deck_position.id,
                     definition = move
                 )
-                self.session.add(start_position_move)
+                self.session.add(deck_position_move)
             self.commit()
 
-    def persist_deck(self, start_position_id: int, player_colour: str, turn_depth: int, response_depth: int) -> Deck:
+    def persist_deck(self, deck_position_id: int, player_colour: str, turn_depth: int, response_depth: int) -> Deck:
         deck = Deck(
-            start_position_id = start_position_id,
+            deck_position_id = deck_position_id,
             player_colour = player_colour,
             turn_depth = turn_depth,
             response_depth = response_depth
@@ -70,8 +70,8 @@ class _Database:
     def get_decks(self) -> List[Deck]:
         return self.session.query(Deck).all()
     
-    def get_start_position(self, name: str) -> StartPosition:
-        return (self.session.query(StartPosition)
+    def get_deck_position(self, name: str) -> DeckPosition:
+        return (self.session.query(DeckPosition)
                             .filter_by(name = name)
                             .first())
 
