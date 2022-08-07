@@ -11,8 +11,8 @@ class Window(tk.Tk):
         super().__init__()
         self.database = database
         self.title('Pawnfork')
-        self.main_frame = MainFrame(self, self)
         self.dimension = 750
+        self.main_frame = MainFrame(self, self)
         self.center()
         
     def center(self):
