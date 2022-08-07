@@ -66,3 +66,17 @@ class DeckFormFrame(tk.Frame):
         self.post_submit_text.configure(text = text)
         self.post_submit_text.pack()
         self.confirm_cancel_frame.pack()
+    
+    def handle_confirm(self, event) -> None:
+        pass
+
+    def handle_cancel(self, event) -> None:
+        for widget in (
+            self.opening_field_frame.field,
+            self.turn_depth_field_frame.field,
+            self.response_depth_field_frame.field,
+            self.create_deck_button
+            ):
+            widget.configure(state = tk.NORMAL)
+        self.post_submit_text.pack_forget()
+        self.confirm_cancel_frame.pack_forget()

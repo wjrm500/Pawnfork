@@ -19,4 +19,4 @@ class CancelButton(tk.Button, AbsButton):
         AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
-        pass
+        self.master.master.handle_cancel(event)
