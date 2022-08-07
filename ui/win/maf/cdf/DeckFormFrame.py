@@ -8,6 +8,7 @@ from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.cdf.dff.ConfirmCancelFrame import ConfirmCancelFrame
 from ui.win.maf.cdf.dff.CreateDeckButton import CreateDeckButton
+from ui.win.maf.cdf.dff.CreatingText import CreatingText
 from ui.win.maf.cdf.dff.PostSubmitText import PostSubmitText
 from ui.win.maf.cdf.dff.fff.OpeningEntry import OpeningEntry
 from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
@@ -36,6 +37,8 @@ class DeckFormFrame(tk.Frame):
         self.post_submit_text.pack_forget()
         self.confirm_cancel_frame = ConfirmCancelFrame(self.window, self)
         self.confirm_cancel_frame.pack_forget()
+        self.creating_text = CreatingText(self.window, self)
+        self.creating_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
     
     def show_error(self, text: str) -> None:
@@ -82,6 +85,8 @@ class DeckFormFrame(tk.Frame):
             self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
     
     def handle_confirm(self, event) -> None:
+        self.creating_text.pack()
+        self.window.update_idletasks()
         self.deck_generator.generate()
         self.window.main_frame.set_frame_to_home()
 
