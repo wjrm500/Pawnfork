@@ -14,6 +14,6 @@ class DeckDataText(tk.Label):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 10)
         )
         self.window = window
-        deck_text = f'Colour: {deck.player_colour} - Turn Depth: {deck.turn_depth} - Response Depth: {deck.response_depth}'
+        deck_text = f'Colour: {deck.player_colour} - Turn Depth: {deck.turn_depth} - Response Depth: {deck.response_depth} - Size: {len(deck.flashcards)}'
         self.configure(text = deck_text)
         self.pack(anchor = tk.W, padx = 10, pady = (5, 10))
