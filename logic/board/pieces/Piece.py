@@ -6,6 +6,7 @@ class Piece:
     def __init__(self, colour: Colour, square: Square) -> None:
         self.colour = colour
         self.square = square
+        self.captured = False
 
     def image_filepath(self) -> str:
         piece_name = self.__class__.__name__.lower()

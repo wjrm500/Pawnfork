@@ -32,6 +32,8 @@ class BoardCanvas(tk.Canvas):
     def add_pieces(self, pieces: List[Piece]) -> None:
         self.piece_elements = []
         for piece in pieces:
+            if piece.captured:
+                continue
             virtual_x, virtual_y = piece.square.centre
             real_x, real_y = virtual_x * self.dimension / 8, virtual_y * self.dimension / 8
             real_y += self.dimension / 75 # This accounts for the fact that for some reason pieces in images are not centered
@@ -80,10 +82,10 @@ class BoardCanvas(tk.Canvas):
 
         # Handle capture
         move_capture = self.master.board.stockfish.will_move_be_a_capture(move) # Anything but Stockfish.Capture.NO_CAPTURE
-        if move_capture.name == Stockfish.Capture.DIRECT_CAPTURE:
+        if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
             captured_piece_element = self.find_withtag(f'square_{to_square}')
             self.delete(captured_piece_element)
-        elif move_capture.name == Stockfish.Capture.EN_PASSANT:
+        elif move_capture == Stockfish.Capture.EN_PASSANT:
             captured_piece_square_rank = 4 if int(to_square[1]) == 3 else 6
             captured_piece_square = f'{to_square[0]}{captured_piece_square_rank}'
             captured_piece_element = self.find_withtag(f'square_{captured_piece_square}')
@@ -95,9 +97,9 @@ class BoardCanvas(tk.Canvas):
         self.itemconfig(self.moving_element, tags = new_tags)
         
         if not castle_castling:
-            # Handle castling
             castling_move = 'type_King' in self.gettags(self.moving_element) and abs(ord(from_square[0]) - ord(to_square[0])) > 1
             if castling_move:
+                # Handle castling rook
                 rook_from_file = 'a' if to_square[0] == 'b' else 'h'
                 rook_rank = to_square[1]
                 rook_from_square = f'{rook_from_file}{rook_rank}'

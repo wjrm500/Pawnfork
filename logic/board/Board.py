@@ -74,14 +74,38 @@ class Board:
     def move_piece(self, move_str: str) -> str:
         from_square_str, to_square_str = move_str[:2], move_str[2:]
         from_square = self.get_square(from_square_str)
-        piece_on_square = from_square.piece
-        if not piece_on_square:
+        moving_piece = from_square.piece
+        if not moving_piece:
             raise Exception(f'No piece on square {from_square_str}')
-        move_valid = self.stockfish.is_move_correct(from_square_str + to_square_str)
+        move_valid = self.stockfish.is_move_correct(move_str)
         if not move_valid:
             raise Exception(f'Move invalid')
         to_square = self.get_square(to_square_str)
-        piece_on_square.move(to_square)
+
+        # Handle capture
+        move_capture = self.stockfish.will_move_be_a_capture(move_str)
+        if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
+            captured_piece = to_square.piece
+            captured_piece.captured = True
+        elif move_capture == Stockfish.Capture.EN_PASSANT:
+            captured_piece_square_rank = 4 if to_square.rank == 3 else 6
+            captured_piece_square = self.get_square(f'{to_square.file_name}{captured_piece_square_rank}')
+            captured_piece = captured_piece_square.piece
+            captured_piece.captured = True
+
+        # Move piece
+        moving_piece.move(to_square)
+
+        # Handle castling rook
+        if moving_piece.__class__ == King and abs(to_square.file - from_square.file) > 1:
+            rook_from_file_name = 'a' if to_square.file_name == 'b' else 'h'
+            rook_rank = to_square.rank
+            rook_from_square = self.get_square(f'{rook_from_file_name}{rook_rank}')
+            rook_to_file = 'c' if to_square.file_name == 'b' else 'f'
+            rook_to_square = self.get_square(f'{rook_to_file}{rook_rank}')
+            moving_rook = rook_from_square.piece
+            moving_rook.move(rook_to_square)
+
         best_move = self.stockfish.get_best_move()
         self.stockfish.make_moves_from_current_position([move_str])
         self.position.append(move_str)
