@@ -81,8 +81,14 @@ class DeckFormFrame(tk.Frame):
             error_message = '\n'.join(error_messages)
             self.show_error(error_message)
         else:
-            self.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
-            self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
+            existing_decks = self.window.database.get_decks()
+            for existing_deck in existing_decks:
+                if opening == existing_deck.name and int(turn_depth) == existing_deck.turn_depth and int(response_depth) == existing_deck.response_depth:
+                    self.show_error('A Deck with this exact configuration already exists!')
+                    break
+            else:
+                self.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
+                self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
     
     def handle_confirm(self, event) -> None:
         self.creating_text.pack()
