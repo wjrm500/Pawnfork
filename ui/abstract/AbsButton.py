@@ -3,7 +3,8 @@ from abc import ABC, abstractmethod
 from ui.utils.ColorUtils import ColorUtils
 
 class AbsButton(ABC):
-    def __init__(self) -> None:
+    def __init__(self, darken_background: bool = True) -> None:
+        self.darken_background = darken_background
         self.original_background = self.cget('background')
         self.bind('<Enter>', self.enter_handler)
         self.bind('<Leave>', self.leave_handler)
@@ -11,7 +12,8 @@ class AbsButton(ABC):
     
     def enter_handler(self, event) -> None:
         self.window.configure(cursor = 'hand2')
-        self.configure(background = ColorUtils.darken_hex(self.original_background, 0.1))
+        if self.darken_background:
+            self.configure(background = ColorUtils.darken_hex(self.original_background, 0.1))
     
     def leave_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
