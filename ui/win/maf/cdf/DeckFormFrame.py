@@ -1,3 +1,4 @@
+from typing import List, Literal
 from stockfish import Stockfish
 import tkinter as tk
 
@@ -67,6 +68,21 @@ class DeckFormFrame(tk.Frame):
         self.post_submit_text.pack()
         self.confirm_cancel_frame.pack()
     
+    def handle_create(self, event) -> None:
+        opening = self.opening_field_frame.field.option_var.get()
+        turn_depth = self.turn_depth_field_frame.field.get()
+        response_depth = self.response_depth_field_frame.field.get()
+        error_messages = []
+        error_messages = self.validate_opening(error_messages, opening)
+        error_messages = self.validate_depth(error_messages, turn_depth, 'Turn')
+        error_messages = self.validate_depth(error_messages, response_depth, 'Response')
+        if len(error_messages):
+            error_message = '\n'.join(error_messages)
+            self.show_error(error_message)
+        else:
+            self.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
+            self.show_estimated_flashcard_number(self.deck_generator.estimate_flashcard_number())
+    
     def handle_confirm(self, event) -> None:
         pass
 
@@ -80,3 +96,20 @@ class DeckFormFrame(tk.Frame):
             widget.configure(state = tk.NORMAL)
         self.post_submit_text.pack_forget()
         self.confirm_cancel_frame.pack_forget()
+    
+    # Private methods
+    
+    def validate_opening(self, error_messages: List[str], opening: str) -> str:
+        if opening == '':
+            error_messages.append('Opening is required')
+        return error_messages
+    
+    def validate_depth(self, error_messages: List[str], depth: int, type: Literal['Turn', 'Response']) -> None:
+        if depth == '':
+            return error_messages + [f'{type} depth is required']
+        if not depth.isnumeric():
+            return error_messages + [f'{type} depth must be numeric']
+        max_depth = 10
+        if int(depth) > max_depth:
+            return error_messages + [f'{type} depth cannot exceed {max_depth}']
+        return error_messages

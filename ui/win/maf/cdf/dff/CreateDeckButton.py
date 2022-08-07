@@ -20,31 +20,4 @@ class CreateDeckButton(tk.Button, AbsButton):
         AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
-        opening = self.master.opening_field_frame.field.option_var.get()
-        turn_depth = self.master.turn_depth_field_frame.field.get()
-        response_depth = self.master.response_depth_field_frame.field.get()
-        error_messages = []
-        error_messages = self.validate_opening(error_messages, opening)
-        error_messages = self.validate_depth(error_messages, turn_depth, 'Turn')
-        error_messages = self.validate_depth(error_messages, response_depth, 'Response')
-        if len(error_messages):
-            error_message = '\n'.join(error_messages)
-            self.master.show_error(error_message)
-        else:
-            self.master.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
-            self.master.show_estimated_flashcard_number(self.master.deck_generator.estimate_flashcard_number())
-    
-    def validate_opening(self, error_messages: List[str], opening: str) -> str:
-        if opening == '':
-            error_messages.append('Opening is required')
-        return error_messages
-    
-    def validate_depth(self, error_messages: List[str], depth: int, type: Literal['Turn', 'Response']) -> None:
-        if depth == '':
-            return error_messages + [f'{type} depth is required']
-        if not depth.isnumeric():
-            return error_messages + [f'{type} depth must be numeric']
-        max_depth = 10
-        if int(depth) > max_depth:
-            return error_messages + [f'{type} depth cannot exceed {max_depth}']
-        return error_messages
+        self.master.handle_create(event)
