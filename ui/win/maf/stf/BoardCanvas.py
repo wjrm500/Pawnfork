@@ -1,4 +1,5 @@
 import math
+from stockfish import Stockfish
 import string
 from PIL import ImageTk, Image
 import tkinter as tk
@@ -79,10 +80,10 @@ class BoardCanvas(tk.Canvas):
 
         # Handle capture
         move_capture = self.master.board.stockfish.will_move_be_a_capture(move) # Anything but Stockfish.Capture.NO_CAPTURE
-        if move_capture.name == 'DIRECT_CAPTURE':
+        if move_capture.name == Stockfish.Capture.DIRECT_CAPTURE:
             captured_piece_element = self.find_withtag(f'square_{to_square}')
             self.delete(captured_piece_element)
-        elif move_capture.name == 'EN_PASSANT':
+        elif move_capture.name == Stockfish.Capture.EN_PASSANT:
             captured_piece_square_rank = 4 if int(to_square[1]) == 3 else 6
             captured_piece_square = f'{to_square[0]}{captured_piece_square_rank}'
             captured_piece_element = self.find_withtag(f'square_{captured_piece_square}')
