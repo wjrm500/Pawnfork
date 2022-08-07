@@ -21,3 +21,6 @@ class NextFlashcardButton(tk.Button, AbsButton):
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
         self.master.load_new_flashcard()
+    
+    def pack(self):
+        super().pack(fill = tk.X, padx = 25)

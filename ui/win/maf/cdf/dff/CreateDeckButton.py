@@ -15,8 +15,22 @@ class CreateDeckButton(tk.Button, AbsButton):
         )
         self.window = window
         self.configure(text = 'Create')
-        self.pack(fill = tk.X, padx = 25, pady = (25, 0))
+        self.pack(anchor = tk.W, padx = 25, pady = (25, 0))
         AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
-        pass
+        opening = self.master.opening_field_frame.field.option_var.get()
+        turn_depth = self.master.turn_depth_field_frame.field.get()
+        response_depth = self.master.response_depth_field_frame.field.get()
+        error_messages = []
+        if opening == '':
+            error_messages.append('Opening is required')
+        if turn_depth == '':
+            error_messages.append('Turn depth is required')
+        if response_depth == '':
+            error_messages.append('Response depth is required')
+        if len(error_messages):
+            error_message = '\n'.join(error_messages)
+            self.master.show_error(error_message)
+        else:
+            pass

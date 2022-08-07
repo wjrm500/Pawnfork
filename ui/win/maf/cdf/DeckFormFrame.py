@@ -2,6 +2,7 @@ import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.cdf.dff.CreateDeckButton import CreateDeckButton
+from ui.win.maf.cdf.dff.ErrorText import ErrorText
 from ui.win.maf.cdf.dff.fff.OpeningEntry import OpeningEntry
 from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
 from ui.win.maf.cdf.dff.fff.ResponseDepthEntry import ResponseDepthEntry
@@ -25,4 +26,10 @@ class DeckFormFrame(tk.Frame):
         self.turn_depth_field_frame = FormFieldFrame(self.window, self, TurnDepthLabel, TurnDepthEntry)
         self.response_depth_field_frame = FormFieldFrame(self.window, self, ResponseDepthLabel, ResponseDepthEntry)
         self.create_deck_button = CreateDeckButton(self.window, self)
+        self.error_text = ErrorText(self.window, self)
+        self.error_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
+    
+    def show_error(self, text: str) -> None:
+        self.error_text.configure(text = text)
+        self.error_text.pack()

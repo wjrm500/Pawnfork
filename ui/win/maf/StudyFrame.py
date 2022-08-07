@@ -45,4 +45,4 @@ class StudyFrame(tk.Frame):
         winsound.PlaySound(f'static\sounds\{sound_filename}.wav', winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
         text = 'Correct - you found the best move!' if correct else f'Incorrect - the best move is {best_move}.'
         self.under_canvas_text.configure(text = text)
-        self.next_flashcard_button.pack(fill = tk.X, padx = 25)
+        self.next_flashcard_button.pack()
