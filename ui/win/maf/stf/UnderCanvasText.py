@@ -14,6 +14,5 @@ class UnderCanvasText(tk.Label):
         )
         self.window = window
         self.flashcard = flashcard
-        opponents_move = self.flashcard.opponents_move().definition
-        self.configure(text = f'Your opponent played {opponents_move}. Make your move!')
+        self.configure(text = f'Your opponent played {self.flashcard.algebraic_opponents_move}. Make your move!')
         self.pack(anchor = tk.CENTER, padx = 10, pady = (10, 5))

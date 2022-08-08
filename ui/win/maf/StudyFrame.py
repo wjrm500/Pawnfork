@@ -29,7 +29,7 @@ class StudyFrame(tk.Frame):
         self.board = Board(self.flashcard)
         if self.canvas is not None:
             self.canvas.destroy()
-        self.canvas = BoardCanvas(self.window, self, Color.BLACK)
+        self.canvas = BoardCanvas(self.window, self, self.deck.player_color)
         self.canvas.add_pieces(self.board.pieces)
         if self.under_canvas_text is not None:
             self.under_canvas_text.destroy()

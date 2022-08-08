@@ -17,7 +17,7 @@ class BoardCanvas(tk.Canvas):
             background = ColorConsts.MEDIUM_GREY
         )
         self.window = window
-        self.color = color
+        self.color = Color(color)
         self.dimension = 500
         self.config(height = self.dimension, width = self.dimension)
         self.piece_image_dimension = int(self.dimension / 6)

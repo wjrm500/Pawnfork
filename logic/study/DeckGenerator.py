@@ -12,13 +12,14 @@ class DeckGenerator:
         self.stockfish = Stockfish(filepaths.STOCKFISH)
         self.database = Database()
         self.deck_position_dict = deck_position_dict
+        self.starting_moves = self.deck_position_dict['moves']
         self.turn_depth = turn_depth
         self.response_depth = response_depth
         self.player_color = player_color
     
     def estimate_flashcard_number(self) -> int:
         num_flashcards = sum([self.response_depth ** n for n in range(self.turn_depth)])
-        color_to_move = Color.WHITE if len(self.deck_position_dict['moves']) % 2 == 0 else Color.BLACK
+        color_to_move = Color.WHITE if len(self.starting_moves) % 2 == 0 else Color.BLACK
         player_to_move = color_to_move.value == self.player_color
         return num_flashcards if player_to_move else num_flashcards * self.response_depth
     
@@ -33,7 +34,7 @@ class DeckGenerator:
         self.flashcards_generated = 0
         t1 = time()
         print(f'The time at the beginning is: {t1}')
-        self.generate_flashcards(self.deck_position_dict['moves'], self.turn_depth)
+        self.generate_flashcards(self.starting_moves, self.turn_depth)
         t2 = time()
         print(f'The time at the end is: {t2}')
         print(f'Total time taken: {t2 - t1}')
@@ -52,7 +53,8 @@ class DeckGenerator:
             self.database.persist_flashcard(
                 self.deck.id,
                 moves,
-                top_move['Move']
+                top_move['Move'],
+                self.get_algebraic_opponents_move(moves)
             )
             self.flashcards_generated += 1
             print(f'{self.flashcards_generated} flashcards generated')
@@ -68,3 +70,16 @@ class DeckGenerator:
             for top_move in good_top_moves:
                 new_moves = moves + [top_move['Move']]
                 self.generate_flashcards(new_moves, turn_depth)
+    
+    def get_algebraic_opponents_move(self, moves: List[str]) -> str:
+        opponents_move = moves[-1]
+        self.stockfish.set_position(moves[:-1]) # We're only temporarily resetting Stockfish to the previous position in order to check whether the move was a capture
+        move_capture = self.stockfish.will_move_be_a_capture(opponents_move)
+        if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
+            algebraic_opponents_move = opponents_move[:2] + 'x' + opponents_move[2:]
+        elif move_capture == Stockfish.Capture.EN_PASSANT:
+            algebraic_opponents_move = opponents_move[:2] + 'x' + opponents_move[2:] + ' e.p.'
+        else:
+            algebraic_opponents_move = opponents_move
+        self.stockfish.set_position(moves) # Resetting Stockfish to current position (see note above)
+        return algebraic_opponents_move

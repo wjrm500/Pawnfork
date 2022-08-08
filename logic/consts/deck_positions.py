@@ -8,4 +8,9 @@ RUY_LOPEZ_OPENING = {
     'moves': ['e2e4', 'e7e5', 'g1f3', 'b8c6', 'f1b5']
 }
 
+CAPTURE_TEST = {
+    'name': 'Capture Test',
+    'moves': ['e2e4', 'd7d5', 'e4d5']
+}
+
 deck_positions = {k: v for k, v in locals().items() if not k.startswith('__')}
