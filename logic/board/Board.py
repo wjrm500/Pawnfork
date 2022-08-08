@@ -106,7 +106,5 @@ class Board:
             moving_rook = rook_from_square.piece
             moving_rook.move(rook_to_square)
 
-        best_move = self.stockfish.get_best_move()
         self.stockfish.make_moves_from_current_position([move_str])
         self.position.append(move_str)
-        return best_move

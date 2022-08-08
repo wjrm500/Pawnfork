@@ -54,6 +54,7 @@ class DeckGenerator:
                 self.deck.id,
                 moves,
                 top_move['Move'],
+                self.get_algebraic_move(top_move['Move']),
                 self.get_algebraic_opponents_move(moves)
             )
             self.flashcards_generated += 1
@@ -70,16 +71,21 @@ class DeckGenerator:
             for top_move in good_top_moves:
                 new_moves = moves + [top_move['Move']]
                 self.generate_flashcards(new_moves, turn_depth)
+            
+    def get_algebraic_move(self, move: str) -> None:
+        move_capture = self.stockfish.will_move_be_a_capture(move)
+        moving_piece_letter = self.stockfish.get_what_is_on_square(move[:2]).value.upper()
+        moving_piece_letter = '' if moving_piece_letter == 'P' else moving_piece_letter
+        if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
+            return moving_piece_letter + 'x' + move[2:]
+        elif move_capture == Stockfish.Capture.EN_PASSANT:
+            return moving_piece_letter + 'x' + move[2:] + ' e.p.'
+        else:
+            return moving_piece_letter + move[2:]
     
     def get_algebraic_opponents_move(self, moves: List[str]) -> str:
-        opponents_move = moves[-1]
         self.stockfish.set_position(moves[:-1]) # We're only temporarily resetting Stockfish to the previous position in order to check whether the move was a capture
-        move_capture = self.stockfish.will_move_be_a_capture(opponents_move)
-        if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
-            algebraic_opponents_move = opponents_move[:2] + 'x' + opponents_move[2:]
-        elif move_capture == Stockfish.Capture.EN_PASSANT:
-            algebraic_opponents_move = opponents_move[:2] + 'x' + opponents_move[2:] + ' e.p.'
-        else:
-            algebraic_opponents_move = opponents_move
+        opponents_move = moves[-1]
+        algebraic_opponents_move = self.get_algebraic_move(opponents_move)
         self.stockfish.set_position(moves) # Resetting Stockfish to current position (see note above)
         return algebraic_opponents_move

@@ -40,10 +40,10 @@ class StudyFrame(tk.Frame):
         self.next_flashcard_button.pack_forget()
     
     def move_piece(self, move: str) -> None:
-        best_move = self.board.move_piece(move)
-        correct = move == best_move
+        self.board.move_piece(move)
+        correct = move == self.flashcard.best_move
         sound_filename = 'correct' if correct else 'incorrect'
         winsound.PlaySound(f'static\sounds\{sound_filename}.wav', winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
-        text = 'Correct - you found the best move!' if correct else f'Incorrect - the best move is {best_move}.'
+        text = 'Correct - you found the best move!' if correct else f'Incorrect - the best move is {self.flashcard.algebraic_best_move}.'
         self.under_canvas_text.configure(text = text)
         self.next_flashcard_button.pack()

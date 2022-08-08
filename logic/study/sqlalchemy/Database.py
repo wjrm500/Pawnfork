@@ -47,10 +47,11 @@ class _Database:
             self.session.add(deck_move)
         return deck
     
-    def persist_flashcard(self, deck_id: int, moves: List[str], your_best_move: str, algebraic_opponents_move: str) -> Flashcard:
+    def persist_flashcard(self, deck_id: int, moves: List[str], best_move: str, algebraic_best_move: str, algebraic_opponents_move: str) -> Flashcard:
         flashcard = Flashcard(
             deck_id = deck_id,
-            your_best_move = your_best_move,
+            best_move = best_move,
+            algebraic_best_move = algebraic_best_move,
             algebraic_opponents_move = algebraic_opponents_move
         )
         self.session.add(flashcard)

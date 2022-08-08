@@ -18,4 +18,4 @@ deck = deck_generator.generate(stockfish)
 
 sorted_flashcards = sorted(deck.flashcards, key = lambda x: len(x.moves))
 for i, flashcard in enumerate(sorted_flashcards, 1):
-    print(str(i) + ': ' + str(flashcard.moves) + ' | ' + flashcard.your_best_move)
+    print(str(i) + ': ' + str(flashcard.moves) + ' | ' + flashcard.best_move)
