@@ -10,7 +10,7 @@ class Deck(Base):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String)
-    player_colour = Column(String)
+    player_color = Column(String)
     turn_depth = Column(Integer)
     response_depth = Column(Integer)
 

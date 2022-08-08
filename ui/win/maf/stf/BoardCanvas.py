@@ -3,19 +3,21 @@ from stockfish import Stockfish
 import string
 from PIL import ImageTk, Image
 import tkinter as tk
-from typing import List
+from typing import List, Literal
 
 from logic.board.pieces import *
+from logic.enums.Color import Color
 from ui.consts.ColorConsts import ColorConsts
 import ui.consts.filepaths as ui_filepaths
 
 class BoardCanvas(tk.Canvas):
-    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Frame, color: Literal[Color.WHITE, Color.BLACK]) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY
         )
         self.window = window
+        self.color = color
         self.dimension = 500
         self.config(height = self.dimension, width = self.dimension)
         self.piece_image_dimension = int(self.dimension / 6)
@@ -36,6 +38,8 @@ class BoardCanvas(tk.Canvas):
                 continue
             virtual_x, virtual_y = piece.square.centre
             real_x, real_y = virtual_x * self.dimension / 8, virtual_y * self.dimension / 8
+            if self.color == Color.BLACK:
+                real_x, real_y = self.dimension - real_x, self.dimension - real_y
             real_y += self.dimension / 75 # This accounts for the fact that for some reason pieces in images are not centered
             image = Image.open(piece.image_filepath())
             image = image.resize((self.piece_image_dimension, self.piece_image_dimension))
@@ -56,6 +60,8 @@ class BoardCanvas(tk.Canvas):
     def piece_mouseup_handler(self, event) -> None:
         self.unbind('<Motion>')
         real_x, real_y = event.x, event.y
+        if self.color == Color.BLACK:
+            real_x, real_y = self.dimension - real_x, self.dimension - real_y
         virtual_x, virtual_y = real_x / self.dimension * 8, real_y / self.dimension * 8
         from_square = next(filter(lambda tag: tag.startswith('square_'), self.gettags(self.moving_element))).split('_')[1]
         to_square = self.get_square_from_virtual_coords(virtual_x, virtual_y)
@@ -70,12 +76,15 @@ class BoardCanvas(tk.Canvas):
         return f'{file_name}{rank_name}'
     
     def move_piece(self, from_square: str, to_square: str, castle_castling: bool = False) -> None:
+        pass
         move = f'{from_square}{to_square}'
 
         # Handle basic movement
         virtual_x = string.ascii_lowercase.index(to_square[0]) + 0.5
         virtual_y = list(reversed(range(1, 9)))[int(to_square[1]) - 1] - 0.5
         real_x, real_y = virtual_x * self.dimension / 8, virtual_y * self.dimension / 8
+        if self.color == Color.BLACK:
+            real_x, real_y = self.dimension - real_x, self.dimension - real_y
         real_x, real_y = real_x - (self.piece_image_dimension / 2), real_y - (self.piece_image_dimension / 2)
         real_y += self.dimension / 75
         self.moveto(self.moving_element, real_x, real_y)

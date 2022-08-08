@@ -3,6 +3,7 @@ import tkinter as tk
 import winsound
 
 from logic.board.Board import Board
+from logic.enums.Color import Color
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.stf.BoardCanvas import BoardCanvas
@@ -28,7 +29,7 @@ class StudyFrame(tk.Frame):
         self.board = Board(self.flashcard)
         if self.canvas is not None:
             self.canvas.destroy()
-        self.canvas = BoardCanvas(self.window, self)
+        self.canvas = BoardCanvas(self.window, self, Color.BLACK)
         self.canvas.add_pieces(self.board.pieces)
         if self.under_canvas_text is not None:
             self.under_canvas_text.destroy()

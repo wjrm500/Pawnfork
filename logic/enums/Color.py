@@ -1,5 +1,5 @@
 from enum import Enum
 
-class Colour(Enum):
+class Color(Enum):
     WHITE = 'White'
     BLACK = 'Black'

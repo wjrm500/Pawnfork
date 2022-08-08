@@ -30,10 +30,10 @@ class _Database:
     def encode_moves(self, moves: List[str]) -> str:
         return '[{}]'.format(','.join(moves))
 
-    def persist_deck(self, deck_position_dict: Dict, player_colour: str, turn_depth: int, response_depth: int) -> Deck:
+    def persist_deck(self, deck_position_dict: Dict, player_color: str, turn_depth: int, response_depth: int) -> Deck:
         deck = Deck(
             name = deck_position_dict['name'],
-            player_colour = player_colour,
+            player_color = player_color,
             turn_depth = turn_depth,
             response_depth = response_depth
         )

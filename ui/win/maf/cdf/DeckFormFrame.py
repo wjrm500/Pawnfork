@@ -3,7 +3,7 @@ from typing import List, Literal
 import tkinter as tk
 
 from logic.consts.deck_positions import deck_positions
-from logic.enums.Colour import Colour
+from logic.enums.Color import Color
 from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts
 from ui.win.maf.cdf.dff.ConfirmCancelFrame import ConfirmCancelFrame
@@ -12,12 +12,16 @@ from ui.win.maf.cdf.dff.CreatingText import CreatingText
 from ui.win.maf.cdf.dff.PostSubmitText import PostSubmitText
 from ui.win.maf.cdf.dff.fff.OpeningEntry import OpeningEntry
 from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
+from ui.win.maf.cdf.dff.fff.PlayerColorEntry import PlayerColorEntry
+from ui.win.maf.cdf.dff.fff.PlayerColorLabel import PlayerColorLabel
 from ui.win.maf.cdf.dff.fff.ResponseDepthEntry import ResponseDepthEntry
 from ui.win.maf.cdf.dff.fff.ResponseDepthLabel import ResponseDepthLabel
 from ui.win.maf.cdf.dff.fff.TurnDepthEntry import TurnDepthEntry
 from ui.win.maf.cdf.dff.fff.TurnDepthLabel import TurnDepthLabel
 from ui.win.maf.cdf.dff.FormFieldFrame import FormFieldFrame
 from ui.win.maf.cdf.dff.SubtitleText import SubtitleText
+from ui.win.maf.cdf.dff.fff.ope.OpeningVar import OpeningVar
+from ui.win.maf.cdf.dff.fff.pce.PlayerColorVar import PlayerColorVar
 
 class DeckFormFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame):
@@ -29,7 +33,8 @@ class DeckFormFrame(tk.Frame):
         )
         self.window = window
         self.subtitle_text = SubtitleText(self.window, self)
-        self.opening_field_frame = FormFieldFrame(self.window, self, OpeningLabel, OpeningEntry)
+        self.opening_field_frame = FormFieldFrame(self.window, self, OpeningLabel, OpeningEntry, OpeningVar)
+        self.player_color_field_frame = FormFieldFrame(self.window, self, PlayerColorLabel, PlayerColorEntry, PlayerColorVar)
         self.turn_depth_field_frame = FormFieldFrame(self.window, self, TurnDepthLabel, TurnDepthEntry)
         self.response_depth_field_frame = FormFieldFrame(self.window, self, ResponseDepthLabel, ResponseDepthEntry)
         self.create_deck_button = CreateDeckButton(self.window, self)
@@ -41,19 +46,20 @@ class DeckFormFrame(tk.Frame):
         self.creating_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
     
-    def instantiate_deck_generator(self, opening: str, turn_depth: int, response_depth: int) -> None:
+    def instantiate_deck_generator(self, opening: str, player_color: Literal[Color.WHITE, Color.BLACK], turn_depth: int, response_depth: int) -> None:
         deck_position_dict = next(filter(lambda x: x['name'] == opening, deck_positions.values()))
         self.deck_generator = DeckGenerator(
             deck_position_dict = deck_position_dict,
             turn_depth = turn_depth,
             response_depth = response_depth,
-            player_colour = Colour.WHITE # TODO: support black
+            player_color = player_color
         )
     
     def handle_successful_form_submit(self) -> None:
         estimated_flashcards = self.deck_generator.estimate_flashcard_number()
         for widget in (
             self.opening_field_frame.field,
+            self.player_color_field_frame.field,
             self.turn_depth_field_frame.field,
             self.response_depth_field_frame.field,
             self.create_deck_button
@@ -64,10 +70,12 @@ class DeckFormFrame(tk.Frame):
     
     def handle_create(self, event) -> None:
         opening = self.opening_field_frame.field.option_var.get()
+        player_color = self.player_color_field_frame.option_var.get()
         turn_depth = self.turn_depth_field_frame.field.get()
         response_depth = self.response_depth_field_frame.field.get()
         error_messages = []
         error_messages = self.validate_opening(error_messages, opening)
+        error_messages = self.validate_player_color(error_messages, player_color)
         error_messages = self.validate_depth(error_messages, turn_depth, 'Turn depth')
         error_messages = self.validate_depth(error_messages, response_depth, 'Response depth')
         if len(error_messages):
@@ -76,11 +84,14 @@ class DeckFormFrame(tk.Frame):
         else:
             existing_decks = self.window.database.get_decks()
             for existing_deck in existing_decks:
-                if opening == existing_deck.name and int(turn_depth) == existing_deck.turn_depth and int(response_depth) == existing_deck.response_depth:
+                if opening == existing_deck.name \
+                    and player_color == existing_deck.player_color \
+                    and int(turn_depth) == existing_deck.turn_depth \
+                    and int(response_depth) == existing_deck.response_depth:
                     self.post_submit_text.show_error(PostSubmitText.ERROR_DECK_EXISTS)
                     break
             else:
-                self.instantiate_deck_generator(opening, int(turn_depth), int(response_depth))
+                self.instantiate_deck_generator(opening, player_color, int(turn_depth), int(response_depth))
                 self.handle_successful_form_submit()
     
     def handle_confirm(self, event) -> None:
@@ -92,6 +103,7 @@ class DeckFormFrame(tk.Frame):
     def handle_cancel(self, event) -> None:
         for widget in (
             self.opening_field_frame.field,
+            self.player_color_field_frame.field,
             self.turn_depth_field_frame.field,
             self.response_depth_field_frame.field,
             self.create_deck_button
@@ -105,6 +117,11 @@ class DeckFormFrame(tk.Frame):
     def validate_opening(self, error_messages: List[str], opening: str) -> str:
         if opening == '':
             error_messages.append('Opening is required')
+        return error_messages
+    
+    def validate_player_color(self, error_messages: List[str], player_color: Literal[Color.WHITE, Color.BLACK]) -> None:
+        if player_color == '':
+            error_messages.append('Player colour is required')
         return error_messages
     
     def validate_depth(self, error_messages: List[str], depth: int, depth_type: Literal['Turn depth', 'Response depth']) -> None:
