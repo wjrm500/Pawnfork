@@ -75,8 +75,11 @@ class DeckGenerator:
     def get_algebraic_move(self, move: str) -> None:
         move_capture = self.stockfish.will_move_be_a_capture(move)
         moving_piece_letter = self.stockfish.get_what_is_on_square(move[:2]).value.upper()
-        moving_piece_letter = '' if moving_piece_letter == 'P' else moving_piece_letter
+        moving_piece_is_pawn = moving_piece_letter == 'P'
+        moving_piece_letter = '' if moving_piece_is_pawn else moving_piece_letter
         if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
+            if moving_piece_is_pawn:
+                return move[:1] + 'x' + move[2:]
             return moving_piece_letter + 'x' + move[2:]
         elif move_capture == Stockfish.Capture.EN_PASSANT:
             return moving_piece_letter + 'x' + move[2:] + ' e.p.'
