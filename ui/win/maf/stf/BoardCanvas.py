@@ -11,7 +11,7 @@ from ui.consts.ColorConsts import ColorConsts
 import ui.consts.filepaths as ui_filepaths
 
 class BoardCanvas(tk.Canvas):
-    def __init__(self, window: tk.Tk, master: tk.Frame, color: Literal[Color.WHITE, Color.BLACK]) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Frame, color: Color) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY

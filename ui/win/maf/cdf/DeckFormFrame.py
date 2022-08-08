@@ -46,7 +46,7 @@ class DeckFormFrame(tk.Frame):
         self.creating_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
     
-    def instantiate_deck_generator(self, opening: str, player_color: Literal[Color.WHITE, Color.BLACK], turn_depth: int, response_depth: int) -> None:
+    def instantiate_deck_generator(self, opening: str, player_color: Color, turn_depth: int, response_depth: int) -> None:
         deck_position_dict = next(filter(lambda x: x['name'] == opening, deck_positions.values()))
         self.deck_generator = DeckGenerator(
             deck_position_dict = deck_position_dict,
@@ -119,7 +119,7 @@ class DeckFormFrame(tk.Frame):
             error_messages.append('Opening is required')
         return error_messages
     
-    def validate_player_color(self, error_messages: List[str], player_color: Literal[Color.WHITE, Color.BLACK]) -> None:
+    def validate_player_color(self, error_messages: List[str], player_color: Color) -> None:
         if player_color == '':
             error_messages.append('Player colour is required')
         return error_messages
