@@ -66,6 +66,10 @@ class _Database:
 
     def get_decks(self) -> List[Deck]:
         return self.session.query(Deck).all()
+    
+    def delete_deck(self, deck: Deck) -> None:
+        self.session.delete(deck)
+        self.commit()
 
 def Database():
     global instance

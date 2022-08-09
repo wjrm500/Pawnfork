@@ -2,8 +2,8 @@ import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.hof.dlf.dcf.DeckDataText import DeckDataText
-from ui.win.maf.hof.dlf.dcf.DeckNameText import DeckNameText
+from ui.win.maf.hof.dlf.dcf.DeckInfoFrame import DeckInfoFrame
+from ui.win.maf.hof.dlf.dcf.DeleteDeckButton import DeleteDeckButton
 
 class DeckCardFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):
@@ -15,9 +15,10 @@ class DeckCardFrame(tk.Frame):
         )
         self.window = window
         self.deck = deck
-        self.deck_name_text = DeckNameText(self.window, self, self.deck)
-        self.deck_data_text = DeckDataText(self.window, self, self.deck)
+        self.deck_info_frame = DeckInfoFrame(self.window, self, self.deck)
+        self.delete_deck_button = DeleteDeckButton(self.window, self, self.deck)
         self.pack(fill = tk.X, padx = 25, pady = (25, 0))
+        self.sub_widgets = [self, self.deck_info_frame, self.deck_info_frame.deck_name_text, self.deck_info_frame.deck_data_text]
         self.add_hover_event()
         self.add_click_event()
     
@@ -26,17 +27,17 @@ class DeckCardFrame(tk.Frame):
         self.bind('<Leave>', self.leave_handler)
     
     def add_click_event(self) -> None:
-        for widget in (self, self.deck_name_text, self.deck_data_text):
+        for widget in self.sub_widgets:
             widget.bind('<Button-1>', self.click_handler)
     
     def enter_handler(self, event) -> None:
         self.window.configure(cursor = 'hand2')
-        for widget in (self, self.deck_name_text, self.deck_data_text):
+        for widget in self.sub_widgets:
             widget.configure(background = ColorConsts.MEDIUM_GREY)
     
     def leave_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
-        for widget in (self, self.deck_name_text, self.deck_data_text):
+        for widget in self.sub_widgets:
             widget.configure(background = ColorConsts.LIGHT_GREY)
     
     def click_handler(self, event) -> None:

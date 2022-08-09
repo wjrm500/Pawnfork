@@ -13,4 +13,4 @@ class Flashcard(Base):
     algebraic_opponents_move = Column(String)
 
     ### One to many relationships
-    moves = relationship('FlashcardMove', backref = 'flashcard')
+    moves = relationship('FlashcardMove', backref = 'flashcard', cascade = 'all,delete')

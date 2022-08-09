@@ -15,8 +15,8 @@ class Deck(Base):
     response_depth = Column(Integer)
 
     ### One to many relationships
-    flashcards = relationship('Flashcard', backref = 'deck')
-    moves = relationship('DeckMove', backref = 'deck')
+    flashcards = relationship('Flashcard', backref = 'deck', cascade = 'all,delete')
+    moves = relationship('DeckMove', backref = 'deck', cascade = 'all,delete')
 
     def get_random_flashcard(self) -> Flashcard:
         return random.choice(self.flashcards)
