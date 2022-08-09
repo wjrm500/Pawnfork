@@ -1,5 +1,4 @@
 import tkinter as tk
-from typing import List, Literal
 
 from ui.abstract.AbsButton import AbsButton
 from ui.consts.ColorConsts import ColorConsts

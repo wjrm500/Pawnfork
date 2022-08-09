@@ -7,7 +7,7 @@ class OpeningEntry(tk.OptionMenu):
         super().__init__(
             master,
             option_var,
-            *[x['name'] for x in list(deck_positions.values())],
+            *sorted(x['name'] for x in list(deck_positions.values())),
         )
         self.window = window
         self.option_var = option_var
