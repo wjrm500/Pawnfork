@@ -12,6 +12,7 @@ class Window(tk.Tk):
         self.database = database
         self.title('Pawnfork')
         self.dimension = 750
+        self.resizable(False, False)
         self.main_frame = MainFrame(self, self)
         self.center()
         
