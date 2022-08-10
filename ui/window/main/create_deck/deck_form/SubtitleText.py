@@ -13,5 +13,5 @@ class SubtitleText(tk.Label):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 16)
         )
         self.window = window
-        self.configure(text = 'Create new Deck')
+        self.configure(text = 'Create new deck')
         self.pack(anchor = tk.W, padx = 25, pady = (25, 0))

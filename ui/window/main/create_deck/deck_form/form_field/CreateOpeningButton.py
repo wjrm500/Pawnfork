@@ -8,14 +8,14 @@ class CreateOpeningButton(tk.Button, AbsButton):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
-            background = ColorConsts.GREEN,
-            font = (FontFamilyConsts.MAIN_FONT_FAMILY, 14),
+            background = ColorConsts.MEDIUM_GREY,
+            font = (FontFamilyConsts.MAIN_FONT_FAMILY, 12),
             relief = tk.FLAT,
             borderwidth = 0
         )
         self.window = window
         self.configure(text = 'Create new opening')
-        self.pack(padx = 25)
+        self.pack(anchor = tk.W, padx = 25, pady = (0, 10))
         AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
