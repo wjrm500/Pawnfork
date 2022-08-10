@@ -14,5 +14,5 @@ class DeckNameText(tk.Label):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 14)
         )
         self.window = window
-        self.configure(text = deck.name)
+        self.configure(text = deck.opening.name)
         self.pack(anchor = tk.W, padx = 10, pady = (10, 5))

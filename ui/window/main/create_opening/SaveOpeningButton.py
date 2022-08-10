@@ -21,7 +21,7 @@ class SaveOpeningButton(tk.Button, AbsButton):
 
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
-        # self.master.save_opening()
+        self.master.save_opening()
     
     def pack(self) -> None:
         super().pack(padx = 25)

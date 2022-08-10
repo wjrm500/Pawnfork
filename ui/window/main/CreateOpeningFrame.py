@@ -26,3 +26,7 @@ class CreateOpeningFrame(tk.Frame):
     
     def enable_save_button(self) -> None:
         self.save_opening_button.configure(state = tk.NORMAL)
+    
+    def save_opening(self) -> None:
+        pass
+        # self.window.database.persist_opening()

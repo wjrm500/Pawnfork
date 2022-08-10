@@ -1,6 +1,5 @@
 import tkinter as tk
 
-from logic.consts.deck_positions import deck_positions
 from logic.enums.Color import Color
 
 class PlayerColorEntry(tk.OptionMenu):

@@ -1,15 +1,17 @@
 
-from typing import Dict, List
+from typing import List
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
 
+from logic.consts.openings import openings
 import logic.consts.filepaths as filepaths
 from logic.study.sqlalchemy import Base
-from logic.study.sqlalchemy.Flashcard import Flashcard
 from logic.study.sqlalchemy.Deck import Deck
-from logic.study.sqlalchemy.DeckMove import DeckMove
+from logic.study.sqlalchemy.Flashcard import Flashcard
 from logic.study.sqlalchemy.FlashcardMove import FlashcardMove
+from logic.study.sqlalchemy.Opening import Opening
+from logic.study.sqlalchemy.OpeningMove import OpeningMove # Not redundant - get weird "failed to locate a name" error without this
 
 instance = None
 
@@ -27,24 +29,34 @@ class _Database:
     def commit(self) -> None:
         self.session.commit()
     
+    def load_openings_from_static_file(self) -> None:
+        for opening_dict in openings.values():
+            if not self.session.query(Opening).filter_by(name = opening_dict['name']).count():
+                opening = Opening(
+                    name = opening_dict['name']
+                )
+                self.session.add(opening)
+                self.session.commit()
+                for move in opening_dict['moves']:
+                    opening_move = OpeningMove(
+                        opening_id = opening.id,
+                        definition = move
+                    )
+                    self.session.add(opening_move)
+                self.session.commit()
+    
     def encode_moves(self, moves: List[str]) -> str:
         return '[{}]'.format(','.join(moves))
 
-    def persist_deck(self, deck_position_dict: Dict, player_color: str, turn_depth: int, response_depth: int) -> Deck:
+    def persist_deck(self, opening_id: int, player_color: str, turn_depth: int, response_depth: int) -> Deck:
         deck = Deck(
-            name = deck_position_dict['name'],
+            opening_id = opening_id,
             player_color = player_color,
             turn_depth = turn_depth,
             response_depth = response_depth
         )
         self.session.add(deck)
         self.commit()
-        for move in deck_position_dict['moves']:
-            deck_move = DeckMove(
-                deck_id = deck.id,
-                definition = move
-            )
-            self.session.add(deck_move)
         return deck
     
     def persist_flashcard(self, deck_id: int, moves: List[str], best_move: str, algebraic_best_move: str, algebraic_opponents_move: str) -> Flashcard:
@@ -70,6 +82,13 @@ class _Database:
     def delete_deck(self, deck: Deck) -> None:
         self.session.delete(deck)
         self.commit()
+    
+    def get_opening_by_name(self, opening_name: str) -> Opening:
+        return self.session.query(Opening).filter_by(name = opening_name).first()
+
+    def get_openings(self) -> List[Opening]:
+        self.load_openings_from_static_file()
+        return self.session.query(Opening).all()
 
 def Database():
     global instance

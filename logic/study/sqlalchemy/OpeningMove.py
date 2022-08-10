@@ -2,11 +2,11 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 
 from logic.study.sqlalchemy import Base
 
-class DeckMove(Base):
-    __tablename__ = 'deck_move'
+class OpeningMove(Base):
+    __tablename__ = 'opening_move'
 
     id = Column(Integer, primary_key = True, autoincrement = True)
-    deck_id = Column(Integer, ForeignKey('deck.id'))
+    opening_id = Column(Integer, ForeignKey('opening.id'))
     definition = Column(String)
 
     def from_square(self) -> str:

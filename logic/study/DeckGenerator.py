@@ -1,31 +1,31 @@
 from time import time
 from stockfish import Stockfish
-from typing import Dict, List
+from typing import List
 
 import logic.consts.filepaths as filepaths
 from logic.enums.Color import Color
 from logic.study.sqlalchemy.Database import Database
 from logic.study.sqlalchemy.Deck import Deck
+from logic.study.sqlalchemy.Opening import Opening
 
 class DeckGenerator:
-    def __init__(self, deck_position_dict: Dict, turn_depth: int, response_depth: int, player_color = Color.WHITE) -> None:
+    def __init__(self, opening: Opening, turn_depth: int, response_depth: int, player_color = Color.WHITE) -> None:
         self.stockfish = Stockfish(filepaths.STOCKFISH)
         self.database = Database()
-        self.deck_position_dict = deck_position_dict
-        self.starting_moves = self.deck_position_dict['moves']
+        self.opening = opening
         self.turn_depth = turn_depth
         self.response_depth = response_depth
         self.player_color = player_color
     
     def estimate_flashcard_number(self) -> int:
         num_flashcards = sum([self.response_depth ** n for n in range(self.turn_depth)])
-        color_to_move = Color.WHITE if len(self.starting_moves) % 2 == 0 else Color.BLACK
+        color_to_move = Color.WHITE if len(self.opening.moves) % 2 == 0 else Color.BLACK
         player_to_move = color_to_move.value == self.player_color
         return num_flashcards if player_to_move else num_flashcards * self.response_depth
     
     def generate(self) -> Deck:
         self.deck = self.database.persist_deck(
-            self.deck_position_dict,
+            self.opening.id,
             self.player_color,
             self.turn_depth,
             self.response_depth
@@ -34,7 +34,7 @@ class DeckGenerator:
         self.flashcards_generated = 0
         t1 = time()
         print(f'The time at the beginning is: {t1}')
-        self.generate_flashcards(self.starting_moves, self.turn_depth)
+        self.generate_flashcards([move.definition for move in self.opening.moves], self.turn_depth)
         t2 = time()
         print(f'The time at the end is: {t2}')
         print(f'Total time taken: {t2 - t1}')

@@ -2,7 +2,7 @@ import math
 from typing import List, Literal
 import tkinter as tk
 
-from logic.consts.deck_positions import deck_positions
+from logic.consts.openings import openings
 from logic.enums.Color import Color
 from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts
@@ -47,10 +47,10 @@ class DeckFormFrame(tk.Frame):
         self.creating_text.pack_forget()
         self.pack(fill = tk.BOTH, expand = True, padx = 20, pady = (0, 20))
     
-    def instantiate_deck_generator(self, opening: str, player_color: Color, turn_depth: int, response_depth: int) -> None:
-        deck_position_dict = next(filter(lambda x: x['name'] == opening, deck_positions.values()))
+    def instantiate_deck_generator(self, opening_name: str, player_color: Color, turn_depth: int, response_depth: int) -> None:
+        opening = self.window.database.get_opening_by_name(opening_name)
         self.deck_generator = DeckGenerator(
-            deck_position_dict = deck_position_dict,
+            opening = opening,
             turn_depth = turn_depth,
             response_depth = response_depth,
             player_color = player_color
@@ -70,12 +70,12 @@ class DeckFormFrame(tk.Frame):
         self.confirm_cancel_frame.pack()
     
     def handle_create(self, event) -> None:
-        opening = self.opening_field_frame.field.option_var.get()
+        opening_name = self.opening_field_frame.field.option_var.get()
         player_color = self.player_color_field_frame.option_var.get()
         turn_depth = self.turn_depth_field_frame.field.get()
         response_depth = self.response_depth_field_frame.field.get()
         error_messages = []
-        error_messages = self.validate_opening(error_messages, opening)
+        error_messages = self.validate_opening(error_messages, opening_name)
         error_messages = self.validate_player_color(error_messages, player_color)
         error_messages = self.validate_depth(error_messages, turn_depth, 'Turn depth')
         error_messages = self.validate_depth(error_messages, response_depth, 'Response depth')
@@ -85,14 +85,14 @@ class DeckFormFrame(tk.Frame):
         else:
             existing_decks = self.window.database.get_decks()
             for existing_deck in existing_decks:
-                if opening == existing_deck.name \
+                if opening_name == existing_deck.opening.name \
                     and player_color == existing_deck.player_color \
                     and int(turn_depth) == existing_deck.turn_depth \
                     and int(response_depth) == existing_deck.response_depth:
                     self.post_submit_text.show_error(PostSubmitText.ERROR_DECK_EXISTS)
                     break
             else:
-                self.instantiate_deck_generator(opening, player_color, int(turn_depth), int(response_depth))
+                self.instantiate_deck_generator(opening_name, player_color, int(turn_depth), int(response_depth))
                 self.handle_successful_form_submit()
     
     def handle_confirm(self, event) -> None:
