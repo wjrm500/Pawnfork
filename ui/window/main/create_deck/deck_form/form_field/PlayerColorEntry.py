@@ -4,7 +4,7 @@ from logic.consts.deck_positions import deck_positions
 from logic.enums.Color import Color
 
 class PlayerColorEntry(tk.OptionMenu):
-    def __init__(self, window: tk.Tk, master: tk.Frame, option_var: tk.StringVar):
+    def __init__(self, window: tk.Tk, master: tk.Frame, option_var: tk.StringVar) -> None:
         super().__init__(
             master,
             option_var,

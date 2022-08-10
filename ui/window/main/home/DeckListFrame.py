@@ -9,7 +9,7 @@ from ui.window.main.home.deck_list.DeckListScrollbar import DeckListScrollbar
 from ui.window.main.home.deck_list.SubtitleText import SubtitleText
 
 class DeckListFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame):
+    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
             background = ColorConsts.WHITE,

@@ -16,7 +16,7 @@ class Window(tk.Tk):
         self.main_frame = MainFrame(self, self)
         self.center()
         
-    def center(self):
+    def center(self) -> None:
         # From https://www.pythontutorial.net/tkinter/tkinter-window/
 
         # Get the screen dimensions

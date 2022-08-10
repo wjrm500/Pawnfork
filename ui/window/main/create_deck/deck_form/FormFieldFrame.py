@@ -5,7 +5,7 @@ from ui.window.main.create_deck.deck_form.form_field.CreateOpeningButton import 
 from ui.window.main.create_deck.deck_form.form_field.OpeningLabel import OpeningLabel
 
 class FormFieldFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame, label: type, entry: type, option_var: type = None):
+    def __init__(self, window: tk.Tk, master: tk.Frame, label: type, entry: type, option_var: type = None) -> None:
         super().__init__(
             master,
             background = ColorConsts.LIGHT_GREY

@@ -5,7 +5,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class ConfirmButton(tk.Button, AbsButton):
-    def __init__(self, window: tk.Tk, master: tk.Frame):
+    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
             background = ColorConsts.GREEN,

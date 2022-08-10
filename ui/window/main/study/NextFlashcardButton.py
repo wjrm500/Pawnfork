@@ -5,7 +5,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class NextFlashcardButton(tk.Button, AbsButton):
-    def __init__(self, window: tk.Tk, master: tk.Frame):
+    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
             background = ColorConsts.GREEN,
@@ -22,5 +22,5 @@ class NextFlashcardButton(tk.Button, AbsButton):
         self.window.configure(cursor = 'arrow')
         self.master.load_new_flashcard()
     
-    def pack(self):
+    def pack(self) -> None:
         super().pack(fill = tk.X, padx = 25)

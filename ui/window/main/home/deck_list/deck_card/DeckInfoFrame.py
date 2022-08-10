@@ -6,7 +6,7 @@ from ui.window.main.home.deck_list.deck_card.deck_info.DeckDataText import DeckD
 from ui.window.main.home.deck_list.deck_card.deck_info.DeckNameText import DeckNameText
 
 class DeckInfoFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):
+    def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck) -> None:
         super().__init__(
             master,
             background = ColorConsts.LIGHT_GREY
