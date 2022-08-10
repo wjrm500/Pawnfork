@@ -16,4 +16,4 @@ class OpeningEntry(tk.OptionMenu):
         menu.delete(0, tk.END)
         for opening in self.window.database.get_openings():
             menu.add_command(label = opening.name, command = tk._setit(self.option_var, opening.name))
-        self.pack(anchor = tk.W, padx = 25, pady = (5, 10))
+        self.pack(anchor = tk.W, padx = 15, pady = (5, 10))

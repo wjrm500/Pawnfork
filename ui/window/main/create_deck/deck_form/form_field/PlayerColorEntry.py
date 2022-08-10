@@ -11,4 +11,4 @@ class PlayerColorEntry(tk.OptionMenu):
         )
         self.window = window
         self.option_var = option_var
-        self.pack(anchor = tk.W, padx = 25, pady = (5, 10))
+        self.pack(anchor = tk.W, padx = 15, pady = (5, 10))

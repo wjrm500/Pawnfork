@@ -15,4 +15,4 @@ class SubtitleText(tk.Label):
         self.window = window
         text = 'You have no decks.' if self.window.database.get_decks() == [] else 'Click a deck to study!'
         self.configure(text = text)
-        self.pack(anchor = tk.W, padx = 25, pady = (25, 0))
+        self.pack(anchor = tk.W, padx = 15, pady = (15, 0))

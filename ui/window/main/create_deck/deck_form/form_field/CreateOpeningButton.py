@@ -15,7 +15,7 @@ class CreateOpeningButton(AbstractButton):
         )
         self.window = window
         self.configure(text = 'Create new opening')
-        self.pack(anchor = tk.W, padx = 25, pady = (0, 10))
+        self.pack(anchor = tk.W, padx = 15, pady = (0, 10))
         
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')

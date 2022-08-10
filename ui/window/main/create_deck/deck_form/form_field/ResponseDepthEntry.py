@@ -11,4 +11,4 @@ class ResponseDepthEntry(tk.Entry):
             font = (FontFamilyConsts.MAIN_FONT_FAMILY, 12)
         )
         self.window = window
-        self.pack(anchor = tk.W, padx = 25, pady = (5, 10))
+        self.pack(anchor = tk.W, padx = 15, pady = (5, 10))

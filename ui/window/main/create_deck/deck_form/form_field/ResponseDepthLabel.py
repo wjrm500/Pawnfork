@@ -14,4 +14,4 @@ class ResponseDepthLabel(tk.Label):
         )
         self.window = window
         self.configure(text = 'Response depth:')
-        self.pack(anchor = tk.W, padx = 25, pady = (10, 5))
+        self.pack(anchor = tk.W, padx = 15, pady = (10, 5))

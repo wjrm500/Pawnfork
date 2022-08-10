@@ -22,4 +22,4 @@ class NextFlashcardButton(AbstractButton):
         self.master.load_new_flashcard()
     
     def pack(self) -> None:
-        super().pack(fill = tk.X, padx = 25)
+        super().pack(padx = 15)

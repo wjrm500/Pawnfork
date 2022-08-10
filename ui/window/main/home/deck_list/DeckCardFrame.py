@@ -17,7 +17,7 @@ class DeckCardFrame(tk.Frame):
         self.deck = deck
         self.deck_info_frame = DeckInfoFrame(self.window, self, self.deck)
         self.delete_deck_button = DeleteDeckButton(self.window, self, self.deck)
-        self.pack(fill = tk.X, padx = 25, pady = (25, 0))
+        self.pack(fill = tk.X, padx = 15, pady = (15, 0))
         self.sub_widgets = [self, self.deck_info_frame, self.deck_info_frame.deck_name_text, self.deck_info_frame.deck_data_text]
         self.add_hover_event()
         self.add_click_event()

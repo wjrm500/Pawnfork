@@ -15,7 +15,7 @@ class CreateDeckButton(AbstractButton):
         )
         self.window = window
         self.configure(text = 'Create a new deck')
-        self.pack(fill = tk.X, padx = 25, pady = 25)
+        self.pack(anchor = tk.W, padx = 15, pady = 15)
         
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')

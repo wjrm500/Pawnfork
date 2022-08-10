@@ -16,4 +16,4 @@ class ConfirmCancelFrame(tk.Frame):
         self.pack()
     
     def pack(self) -> None:
-        super().pack(anchor = tk.W, padx = 25, pady = (10, 0))
+        super().pack(anchor = tk.W, padx = 15, pady = (5, 0))
