@@ -10,6 +10,7 @@ from ui.window.main.create_deck.deck_form.ConfirmCancelFrame import ConfirmCance
 from ui.window.main.create_deck.deck_form.CreateDeckButton import CreateDeckButton
 from ui.window.main.create_deck.deck_form.CreatingText import CreatingText
 from ui.window.main.create_deck.deck_form.PostSubmitText import PostSubmitText
+from ui.window.main.create_deck.deck_form.form_field.CreateOpeningButton import CreateOpeningButton
 from ui.window.main.create_deck.deck_form.form_field.OpeningEntry import OpeningEntry
 from ui.window.main.create_deck.deck_form.form_field.OpeningLabel import OpeningLabel
 from ui.window.main.create_deck.deck_form.form_field.PlayerColorEntry import PlayerColorEntry
@@ -33,7 +34,7 @@ class DeckFormFrame(tk.Frame):
         )
         self.window = window
         self.subtitle_text = SubtitleText(self.window, self)
-        self.opening_field_frame = FormFieldFrame(self.window, self, OpeningLabel, OpeningEntry, OpeningVar)
+        self.opening_field_frame = FormFieldFrame(self.window, self, OpeningLabel, OpeningEntry, OpeningVar, CreateOpeningButton)
         self.player_color_field_frame = FormFieldFrame(self.window, self, PlayerColorLabel, PlayerColorEntry, PlayerColorVar)
         self.turn_depth_field_frame = FormFieldFrame(self.window, self, TurnDepthLabel, TurnDepthEntry)
         self.response_depth_field_frame = FormFieldFrame(self.window, self, ResponseDepthLabel, ResponseDepthEntry)
