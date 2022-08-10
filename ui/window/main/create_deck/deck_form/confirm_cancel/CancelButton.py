@@ -1,10 +1,10 @@
 import tkinter as tk
 
-from ui.abstract.AbsButton import AbsButton
+from ui.abstract.AbstractButton import AbstractButton
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
-class CancelButton(tk.Button, AbsButton):
+class CancelButton(AbstractButton):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
@@ -16,7 +16,6 @@ class CancelButton(tk.Button, AbsButton):
         self.window = window
         self.configure(text = 'Cancel')
         self.pack(side = tk.RIGHT, padx = (5, 0))
-        AbsButton.__init__(self)
         
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')

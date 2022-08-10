@@ -76,19 +76,22 @@ class _Database:
         self.load_openings_from_static_file()
         return self.session.query(Opening).all()
     
-    def persist_opening(self, name: str, moves: List[str]) -> None:
-        opening = Opening(
-            name = name
-        )
-        self.session.add(opening)
-        self.session.commit()
-        for move in moves:
-            opening_move = OpeningMove(
-                opening_id = opening.id,
-                definition = move
+    def persist_opening(self, name: str, moves: List[str]) -> bool:
+        if not self.session.query(Opening).filter_by(name = name).count():
+            opening = Opening(
+                name = name
             )
-            self.session.add(opening_move)
-        self.session.commit()
+            self.session.add(opening)
+            self.session.commit()
+            for move in moves:
+                opening_move = OpeningMove(
+                    opening_id = opening.id,
+                    definition = move
+                )
+                self.session.add(opening_move)
+            self.session.commit()
+            return True
+        return False
 
 def Database():
     global instance

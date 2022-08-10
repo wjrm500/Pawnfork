@@ -1,10 +1,10 @@
 import tkinter as tk
 
-from ui.abstract.AbsButton import AbsButton
+from ui.abstract.AbstractButton import AbstractButton
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
-class SaveOpeningButton(tk.Button, AbsButton):
+class SaveOpeningButton(AbstractButton):
     def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
         super().__init__(
             master,
@@ -15,13 +15,9 @@ class SaveOpeningButton(tk.Button, AbsButton):
         )
         self.window = window
         self.configure(text = 'Save')
-        self.configure(state = tk.DISABLED)
         self.pack()
-        AbsButton.__init__(self)
+        self.disable()
 
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
         self.master.handle_save()
-    
-    def pack(self) -> None:
-        super().pack(padx = 25)

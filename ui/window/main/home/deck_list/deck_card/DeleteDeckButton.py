@@ -1,11 +1,11 @@
 import tkinter as tk
 from logic.study.sqlalchemy.Deck import Deck
 
-from ui.abstract.AbsButton import AbsButton
+from ui.abstract.AbstractButton import AbstractButton
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
-class DeleteDeckButton(tk.Button, AbsButton):
+class DeleteDeckButton(AbstractButton):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck) -> None:
         super().__init__(
             master,
@@ -19,7 +19,6 @@ class DeleteDeckButton(tk.Button, AbsButton):
         self.deck = deck
         self.configure(text = '✕')
         self.pack(side = tk.RIGHT, anchor = tk.N, padx = 5, pady = 5)
-        AbsButton.__init__(self)
     
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')

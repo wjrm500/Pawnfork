@@ -12,3 +12,8 @@ class OpeningNameEntry(tk.Entry):
         )
         self.window = window
         self.pack(side = tk.RIGHT, padx = (5, 10), pady = 10)
+        self.bind('<KeyRelease>', self.handle_key_release)
+    
+    def handle_key_release(self, event) -> None:
+        entry_empty = self.get() == ''
+        self.master.master.handle_name_key_release(entry_empty)
