@@ -32,18 +32,7 @@ class _Database:
     def load_openings_from_static_file(self) -> None:
         for opening_dict in openings.values():
             if not self.session.query(Opening).filter_by(name = opening_dict['name']).count():
-                opening = Opening(
-                    name = opening_dict['name']
-                )
-                self.session.add(opening)
-                self.session.commit()
-                for move in opening_dict['moves']:
-                    opening_move = OpeningMove(
-                        opening_id = opening.id,
-                        definition = move
-                    )
-                    self.session.add(opening_move)
-                self.session.commit()
+                self.persist_opening(opening_dict['name'], opening_dict['moves'])
 
     def persist_deck(self, opening_id: int, player_color: str, turn_depth: int, response_depth: int) -> Deck:
         deck = Deck(
@@ -86,6 +75,20 @@ class _Database:
     def get_openings(self) -> List[Opening]:
         self.load_openings_from_static_file()
         return self.session.query(Opening).all()
+    
+    def persist_opening(self, name: str, moves: List[str]) -> None:
+        opening = Opening(
+            name = name
+        )
+        self.session.add(opening)
+        self.session.commit()
+        for move in moves:
+            opening_move = OpeningMove(
+                opening_id = opening.id,
+                definition = move
+            )
+            self.session.add(opening_move)
+        self.session.commit()
 
 def Database():
     global instance

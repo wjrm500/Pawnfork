@@ -20,4 +20,4 @@ class CancelButton(tk.Button, AbsButton):
         
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
-        self.master.master.handle_cancel(event)
+        self.master.master.handle_cancel()

@@ -20,4 +20,4 @@ class CreateDeckButton(tk.Button, AbsButton):
         
     def click_handler(self, event) -> None:
         self.window.configure(cursor = 'arrow')
-        self.master.handle_create(event)
+        self.master.handle_create()

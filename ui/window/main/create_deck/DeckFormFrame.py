@@ -69,7 +69,7 @@ class DeckFormFrame(tk.Frame):
         self.post_submit_text.show_estimated_flashcards(estimated_flashcards)
         self.confirm_cancel_frame.pack()
     
-    def handle_create(self, event) -> None:
+    def handle_create(self) -> None:
         opening_name = self.opening_field_frame.field.option_var.get()
         player_color = self.player_color_field_frame.option_var.get()
         turn_depth = self.turn_depth_field_frame.field.get()
@@ -95,13 +95,13 @@ class DeckFormFrame(tk.Frame):
                 self.instantiate_deck_generator(opening_name, player_color, int(turn_depth), int(response_depth))
                 self.handle_successful_form_submit()
     
-    def handle_confirm(self, event) -> None:
+    def handle_confirm(self) -> None:
         self.creating_text.pack()
         self.window.update_idletasks()
         self.deck_generator.generate()
         self.window.main_frame.set_frame_to_home()
 
-    def handle_cancel(self, event) -> None:
+    def handle_cancel(self) -> None:
         for widget in (
             self.opening_field_frame.field,
             self.player_color_field_frame.field,

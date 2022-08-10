@@ -17,7 +17,7 @@ class CreateOpeningFrame(tk.Frame):
         self.board = Board()
         self.canvas = CreateOpeningBoardCanvas(self.window, self, Color.WHITE)
         self.canvas.add_pieces(self.board.pieces)
-        self.opening_name_entry = OpeningNameFrame(self.window, self)
+        self.opening_name_frame = OpeningNameFrame(self.window, self)
         self.save_opening_button = SaveOpeningButton(self.window, self)
         self.pack(fill = tk.BOTH, expand = True)
     
@@ -27,6 +27,7 @@ class CreateOpeningFrame(tk.Frame):
     def enable_save_button(self) -> None:
         self.save_opening_button.configure(state = tk.NORMAL)
     
-    def save_opening(self) -> None:
-        pass
-        # self.window.database.persist_opening()
+    def handle_save(self) -> None:
+        opening_name = self.opening_name_frame.opening_name_entry.get()
+        self.window.database.persist_opening(opening_name, self.board.position)
+        self.window.main_frame.set_frame_to_create_deck()
