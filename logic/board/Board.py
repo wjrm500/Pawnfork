@@ -7,7 +7,7 @@ from logic.enums.Color import Color
 from logic.study.sqlalchemy.Flashcard import Flashcard
 
 class Board:
-    def __init__(self, flashcard: Flashcard) -> None:
+    def __init__(self, flashcard: Flashcard = None) -> None:
         self.stockfish = Stockfish(path = filepaths.STOCKFISH)
         self.squares = {}
         self.pieces = []
@@ -17,8 +17,9 @@ class Board:
                 square = Square(file, rank)
                 self.add_square(square)
         self.add_pieces()
-        for move in flashcard.moves:
-            self.move_piece(move.definition)
+        if flashcard is not None:
+            for move in flashcard.moves:
+                self.move_piece(move.definition)
     
     def add_square(self, square: Square) -> None:
         if square.file_name not in self.squares:

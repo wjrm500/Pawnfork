@@ -1,6 +1,8 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
+from ui.win.maf.cdf.dff.fff.CreateOpeningButton import CreateOpeningButton
+from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
 
 class FormFieldFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame, label: type, entry: type, option_var: type = None):
@@ -15,4 +17,6 @@ class FormFieldFrame(tk.Frame):
             self.field = entry(self.window, self, self.option_var)
         else:
             self.field = entry(self.window, self)
+        if label == OpeningLabel:
+            CreateOpeningButton(self.window, self)
         self.pack(fill = tk.X, padx = 25, pady = (15, 0))

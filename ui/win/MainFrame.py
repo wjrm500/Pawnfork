@@ -1,6 +1,7 @@
 import tkinter as tk
 from logic.study.sqlalchemy.Deck import Deck
 from ui.win.maf.CreateDeckFrame import CreateDeckFrame
+from ui.win.maf.CreateOpeningFrame import CreateOpeningFrame
 
 from ui.win.maf.StudyFrame import StudyFrame
 from ui.win.maf.HomeFrame import HomeFrame
@@ -29,3 +30,8 @@ class MainFrame(tk.Frame):
         if self.frame is not None:
             self.frame.destroy()
         self.frame = CreateDeckFrame(self.window, self)
+    
+    def set_frame_to_create_opening(self) -> None:
+        if self.frame is not None:
+            self.frame.destroy()
+        self.frame = CreateOpeningFrame(self.window, self)
