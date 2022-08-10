@@ -2,7 +2,7 @@ import tkinter as tk
 
 from logic.board.pieces import *
 from logic.study.sqlalchemy.Database import Database
-from ui.win.MainFrame import MainFrame
+from ui.window.MainFrame import MainFrame
 
 class Window(tk.Tk):
     main_frame: MainFrame

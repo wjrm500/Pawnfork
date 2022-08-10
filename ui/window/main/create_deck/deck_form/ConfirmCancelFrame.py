@@ -1,8 +1,8 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.cdf.dff.ccf.CancelButton import CancelButton
-from ui.win.maf.cdf.dff.ccf.ConfirmButton import ConfirmButton
+from ui.window.main.create_deck.deck_form.confirm_cancel.CancelButton import CancelButton
+from ui.window.main.create_deck.deck_form.confirm_cancel.ConfirmButton import ConfirmButton
 
 class ConfirmCancelFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame):

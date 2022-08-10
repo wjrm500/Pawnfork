@@ -1,12 +1,12 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.hof.dlf.CreateDeckButton import CreateDeckButton
-from ui.win.maf.hof.dlf.DeckCardFrame import DeckCardFrame
-from ui.win.maf.hof.dlf.DeckListCanvas import DeckListCanvas
-from ui.win.maf.hof.dlf.DeckListCanvasFrame import DeckListCanvasFrame
-from ui.win.maf.hof.dlf.DeckListScrollbar import DeckListScrollbar
-from ui.win.maf.hof.dlf.SubtitleText import SubtitleText
+from ui.window.main.home.deck_list.CreateDeckButton import CreateDeckButton
+from ui.window.main.home.deck_list.DeckCardFrame import DeckCardFrame
+from ui.window.main.home.deck_list.DeckListCanvas import DeckListCanvas
+from ui.window.main.home.deck_list.DeckListCanvasFrame import DeckListCanvasFrame
+from ui.window.main.home.deck_list.DeckListScrollbar import DeckListScrollbar
+from ui.window.main.home.deck_list.SubtitleText import SubtitleText
 
 class DeckListFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame):

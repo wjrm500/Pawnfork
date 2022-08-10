@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.hof.DeckListFrame import DeckListFrame
+from ui.window.main.home.DeckListFrame import DeckListFrame
 
 class HomeFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:

@@ -1,11 +1,11 @@
 import tkinter as tk
 from logic.study.sqlalchemy.Deck import Deck
-from ui.win.maf.CreateDeckFrame import CreateDeckFrame
-from ui.win.maf.CreateOpeningFrame import CreateOpeningFrame
+from ui.window.main.CreateDeckFrame import CreateDeckFrame
+from ui.window.main.CreateOpeningFrame import CreateOpeningFrame
 
-from ui.win.maf.StudyFrame import StudyFrame
-from ui.win.maf.HomeFrame import HomeFrame
-from ui.win.maf.TitleFrame import TitleFrame
+from ui.window.main.StudyFrame import StudyFrame
+from ui.window.main.HomeFrame import HomeFrame
+from ui.window.main.TitleFrame import TitleFrame
 
 class MainFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:

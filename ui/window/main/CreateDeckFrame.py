@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.cdf.DeckFormFrame import DeckFormFrame
+from ui.window.main.create_deck.DeckFormFrame import DeckFormFrame
 
 class CreateDeckFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:

@@ -1,8 +1,8 @@
 import tkinter as tk
 
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.cdf.dff.fff.CreateOpeningButton import CreateOpeningButton
-from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
+from ui.window.main.create_deck.deck_form.form_field.CreateOpeningButton import CreateOpeningButton
+from ui.window.main.create_deck.deck_form.form_field.OpeningLabel import OpeningLabel
 
 class FormFieldFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame, label: type, entry: type, option_var: type = None):

@@ -2,8 +2,8 @@ import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.hof.dlf.dcf.DeckInfoFrame import DeckInfoFrame
-from ui.win.maf.hof.dlf.dcf.DeleteDeckButton import DeleteDeckButton
+from ui.window.main.home.deck_list.deck_card.DeckInfoFrame import DeckInfoFrame
+from ui.window.main.home.deck_list.deck_card.DeleteDeckButton import DeleteDeckButton
 
 class DeckCardFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):

@@ -6,22 +6,22 @@ from logic.consts.deck_positions import deck_positions
 from logic.enums.Color import Color
 from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.cdf.dff.ConfirmCancelFrame import ConfirmCancelFrame
-from ui.win.maf.cdf.dff.CreateDeckButton import CreateDeckButton
-from ui.win.maf.cdf.dff.CreatingText import CreatingText
-from ui.win.maf.cdf.dff.PostSubmitText import PostSubmitText
-from ui.win.maf.cdf.dff.fff.OpeningEntry import OpeningEntry
-from ui.win.maf.cdf.dff.fff.OpeningLabel import OpeningLabel
-from ui.win.maf.cdf.dff.fff.PlayerColorEntry import PlayerColorEntry
-from ui.win.maf.cdf.dff.fff.PlayerColorLabel import PlayerColorLabel
-from ui.win.maf.cdf.dff.fff.ResponseDepthEntry import ResponseDepthEntry
-from ui.win.maf.cdf.dff.fff.ResponseDepthLabel import ResponseDepthLabel
-from ui.win.maf.cdf.dff.fff.TurnDepthEntry import TurnDepthEntry
-from ui.win.maf.cdf.dff.fff.TurnDepthLabel import TurnDepthLabel
-from ui.win.maf.cdf.dff.FormFieldFrame import FormFieldFrame
-from ui.win.maf.cdf.dff.SubtitleText import SubtitleText
-from ui.win.maf.cdf.dff.fff.ope.OpeningVar import OpeningVar
-from ui.win.maf.cdf.dff.fff.pce.PlayerColorVar import PlayerColorVar
+from ui.window.main.create_deck.deck_form.ConfirmCancelFrame import ConfirmCancelFrame
+from ui.window.main.create_deck.deck_form.CreateDeckButton import CreateDeckButton
+from ui.window.main.create_deck.deck_form.CreatingText import CreatingText
+from ui.window.main.create_deck.deck_form.PostSubmitText import PostSubmitText
+from ui.window.main.create_deck.deck_form.form_field.OpeningEntry import OpeningEntry
+from ui.window.main.create_deck.deck_form.form_field.OpeningLabel import OpeningLabel
+from ui.window.main.create_deck.deck_form.form_field.PlayerColorEntry import PlayerColorEntry
+from ui.window.main.create_deck.deck_form.form_field.PlayerColorLabel import PlayerColorLabel
+from ui.window.main.create_deck.deck_form.form_field.ResponseDepthEntry import ResponseDepthEntry
+from ui.window.main.create_deck.deck_form.form_field.ResponseDepthLabel import ResponseDepthLabel
+from ui.window.main.create_deck.deck_form.form_field.TurnDepthEntry import TurnDepthEntry
+from ui.window.main.create_deck.deck_form.form_field.TurnDepthLabel import TurnDepthLabel
+from ui.window.main.create_deck.deck_form.FormFieldFrame import FormFieldFrame
+from ui.window.main.create_deck.deck_form.SubtitleText import SubtitleText
+from ui.window.main.create_deck.deck_form.form_field.OpeningVar import OpeningVar
+from ui.window.main.create_deck.deck_form.form_field.PlayerColorVar import PlayerColorVar
 
 class DeckFormFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame):

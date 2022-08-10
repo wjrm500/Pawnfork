@@ -2,8 +2,8 @@ import tkinter as tk
 
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.hof.dlf.dcf.dif.DeckDataText import DeckDataText
-from ui.win.maf.hof.dlf.dcf.dif.DeckNameText import DeckNameText
+from ui.window.main.home.deck_list.deck_card.deck_info.DeckDataText import DeckDataText
+from ui.window.main.home.deck_list.deck_card.deck_info.DeckNameText import DeckNameText
 
 class DeckInfoFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck):

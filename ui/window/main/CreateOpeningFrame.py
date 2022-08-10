@@ -4,7 +4,7 @@ from logic.board.Board import Board
 from logic.enums.Color import Color
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
-from ui.win.maf.stf.BoardCanvas import BoardCanvas
+from ui.window.main.study.BoardCanvas import BoardCanvas
 
 class CreateOpeningFrame(tk.Frame):
     def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
