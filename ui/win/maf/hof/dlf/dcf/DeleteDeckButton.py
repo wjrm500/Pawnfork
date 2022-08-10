@@ -22,5 +22,6 @@ class DeleteDeckButton(tk.Button, AbsButton):
         AbsButton.__init__(self)
     
     def click_handler(self, event) -> None:
+        self.window.configure(cursor = 'arrow')
         self.window.database.delete_deck(self.deck)
         self.window.main_frame.set_frame_to_home()

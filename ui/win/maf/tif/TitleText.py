@@ -19,4 +19,5 @@ class TitleText(tk.Label, AbsButton):
         AbsButton.__init__(self, darken_background = False)
     
     def click_handler(self, event) -> None:
+        self.window.configure(cursor = 'arrow')
         self.window.main_frame.set_frame_to_home()
