@@ -6,7 +6,7 @@ from logic.board.Board import Board
 from logic.enums.Color import Color
 from logic.study.sqlalchemy.Deck import Deck
 from ui.consts.ColorConsts import ColorConsts
-from ui.window.main.study.BoardCanvas import BoardCanvas
+from ui.window.main.study.StudyBoardCanvas import StudyBoardCanvas
 from ui.window.main.study.NextFlashcardButton import NextFlashcardButton
 from ui.window.main.study.UnderCanvasText import UnderCanvasText
 
@@ -29,7 +29,7 @@ class StudyFrame(tk.Frame):
         self.board = Board(self.flashcard)
         if self.canvas is not None:
             self.canvas.destroy()
-        self.canvas = BoardCanvas(self.window, self, self.deck.player_color)
+        self.canvas = StudyBoardCanvas(self.window, self, self.deck.player_color)
         self.canvas.add_pieces(self.board.pieces)
         if self.under_canvas_text is not None:
             self.under_canvas_text.destroy()

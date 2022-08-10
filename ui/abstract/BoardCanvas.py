@@ -3,7 +3,7 @@ from stockfish import Stockfish
 import string
 from PIL import ImageTk, Image
 import tkinter as tk
-from typing import List, Literal
+from typing import List
 
 from logic.board.pieces import *
 from logic.enums.Color import Color
