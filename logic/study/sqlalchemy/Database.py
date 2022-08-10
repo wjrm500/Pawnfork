@@ -44,9 +44,6 @@ class _Database:
                     )
                     self.session.add(opening_move)
                 self.session.commit()
-    
-    def encode_moves(self, moves: List[str]) -> str:
-        return '[{}]'.format(','.join(moves))
 
     def persist_deck(self, opening_id: int, player_color: str, turn_depth: int, response_depth: int) -> Deck:
         deck = Deck(
