@@ -1,5 +1,5 @@
 import tkinter as tk
-from typing import Tuple
+from typing import Callable, Tuple
 import winsound
 
 from logic.board.Board import Board
@@ -25,20 +25,20 @@ class StudyFrame(tk.Frame):
         self.load_new_flashcard()
         self.pack(fill = tk.BOTH, expand = True)
     
-    def create_widget(self, widget_name: str, widget: tk.Widget, widget_args: Tuple) -> None:
+    def create_widget(self, widget_name: str, widget: tk.Widget, widget_args: Tuple, widget_callback: Callable = None) -> None:
         if (bound_widget := getattr(self, widget_name)) is not None:
             bound_widget.destroy()
         setattr(self, widget_name, widget(*widget_args))
+        if widget_callback:
+            widget_callback(getattr(self, widget_name))
 
     def load_new_flashcard(self) -> None:
         self.flashcard = self.deck.get_random_flashcard()
         self.board = Board(self.flashcard)
-        self.create_widget('canvas', StudyBoardCanvas, (self.window, self, self.deck.player_color))
-        self.canvas.add_pieces(self.board.pieces)
+        self.create_widget('canvas', StudyBoardCanvas, (self.window, self, self.deck.player_color), lambda w: w.add_pieces(self.board.pieces))
         self.create_widget('previous_moves_text', PreviousMovesText, (self.window, self, self.flashcard))
         self.create_widget('prompt_user_text', PromptUserText, (self.window, self, self.flashcard))
-        self.create_widget('next_flashcard_button', NextFlashcardButton, (self.window, self))
-        self.next_flashcard_button.pack_forget()
+        self.create_widget('next_flashcard_button', NextFlashcardButton, (self.window, self), lambda w: w.pack_forget())
     
     def move_piece(self, move: str) -> None:
         self.board.move_piece(move)
