@@ -14,6 +14,8 @@ class OpeningEntry(tk.OptionMenu):
         self.option_var = option_var
         menu = self['menu']
         menu.delete(0, tk.END)
-        for opening in self.window.database.get_openings():
+        openings = self.window.database.get_openings()
+        ordered_openings = sorted(openings, key = lambda x: x.name)
+        for opening in ordered_openings:
             menu.add_command(label = opening.name, command = tk._setit(self.option_var, opening.name))
         self.pack(anchor = tk.W, padx = 15, pady = (5, 10))
