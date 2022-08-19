@@ -6,3 +6,5 @@ todos.txt
 static/
 *.db
 app/
+*.spec
+test.py
