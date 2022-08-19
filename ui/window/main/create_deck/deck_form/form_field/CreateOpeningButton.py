@@ -5,7 +5,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class CreateOpeningButton(AbstractButton):
-    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY,

@@ -4,7 +4,7 @@ from tkinter import ttk
 from ui.consts.ColorConsts import ColorConsts
 
 class DeckListCanvas(tk.Canvas):
-    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             bd = 0,

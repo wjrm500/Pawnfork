@@ -4,7 +4,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.window.main.home.DeckListFrame import DeckListFrame
 
 class HomeFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY

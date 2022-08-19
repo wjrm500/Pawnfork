@@ -11,7 +11,7 @@ from ui.window.main.study.NextFlashcardButton import NextFlashcardButton
 from ui.window.main.study.PromptUserText import PromptUserText
 
 class StudyFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Tk, deck: Deck) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, deck: Deck) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY

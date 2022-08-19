@@ -4,7 +4,7 @@ from typing import List
 from logic.study.sqlalchemy.Opening import Opening
 
 class OpeningEntry(tk.OptionMenu):
-    def __init__(self, window: tk.Tk, master: tk.Frame, option_var: tk.StringVar) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, option_var: tk.StringVar) -> None:
         super().__init__(
             master,
             option_var,

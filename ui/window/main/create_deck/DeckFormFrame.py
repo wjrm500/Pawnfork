@@ -25,7 +25,7 @@ from ui.window.main.create_deck.deck_form.form_field.OpeningVar import OpeningVa
 from ui.window.main.create_deck.deck_form.form_field.PlayerColorVar import PlayerColorVar
 
 class DeckFormFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame):
+    def __init__(self, window: tk.Tk, master: tk.Widget):
         super().__init__(
             master,
             background = ColorConsts.WHITE,

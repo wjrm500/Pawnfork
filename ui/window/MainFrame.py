@@ -8,7 +8,7 @@ from ui.window.main.HomeFrame import HomeFrame
 from ui.window.main.TitleFrame import TitleFrame
 
 class MainFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(master)
         self.window = window
         self.title_frame = TitleFrame(self.window, self)

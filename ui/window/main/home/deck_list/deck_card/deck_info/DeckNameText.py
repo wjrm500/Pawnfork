@@ -5,7 +5,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class DeckNameText(tk.Label):
-    def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, deck: Deck) -> None:
         super().__init__(
             master,
             background = ColorConsts.LIGHT_GREY,

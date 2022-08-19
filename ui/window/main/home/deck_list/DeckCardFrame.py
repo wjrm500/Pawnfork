@@ -6,7 +6,7 @@ from ui.window.main.home.deck_list.deck_card.DeckInfoFrame import DeckInfoFrame
 from ui.window.main.home.deck_list.deck_card.DeleteDeckButton import DeleteDeckButton
 
 class DeckCardFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, deck: Deck) -> None:
         super().__init__(
             master,
             background = ColorConsts.LIGHT_GREY,

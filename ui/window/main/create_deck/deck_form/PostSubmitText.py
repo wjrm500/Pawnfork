@@ -10,7 +10,7 @@ class PostSubmitText(tk.Label):
     ERROR_NOT_NUMERIC = '{} must be numeric'
     ERROR_MAX_EXCEEDED = '{} cannot exceed {}'
 
-    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             background = ColorConsts.WHITE,

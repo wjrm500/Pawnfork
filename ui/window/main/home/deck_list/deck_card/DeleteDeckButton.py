@@ -6,7 +6,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class DeleteDeckButton(AbstractButton):
-    def __init__(self, window: tk.Tk, master: tk.Frame, deck: Deck) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, deck: Deck) -> None:
         super().__init__(
             master,
             foreground = ColorConsts.WHITE,

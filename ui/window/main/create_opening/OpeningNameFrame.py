@@ -5,7 +5,7 @@ from ui.window.main.create_opening.opening_name.OpeningNameEntry import OpeningN
 from ui.window.main.create_opening.opening_name.OpeningNameLabel import OpeningNameLabel
 
 class OpeningNameFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Tk) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY

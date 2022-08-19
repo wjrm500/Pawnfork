@@ -4,7 +4,7 @@ from logic.enums.Color import Color
 from ui.abstract.BoardCanvas import BoardCanvas
 
 class CreateOpeningBoardCanvas(BoardCanvas):
-    def __init__(self, window: tk.Tk, master: tk.Frame, color: Color) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, color: Color) -> None:
         super().__init__(window, master, color)
         self.has_moved = False
     

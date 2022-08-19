@@ -5,7 +5,7 @@ from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
 class PreviousMovesText(tk.Label):
-    def __init__(self, window: tk.Tk, master: tk.Frame, flashcard: Flashcard) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, flashcard: Flashcard) -> None:
         super().__init__(
             master,
             background = ColorConsts.MEDIUM_GREY,

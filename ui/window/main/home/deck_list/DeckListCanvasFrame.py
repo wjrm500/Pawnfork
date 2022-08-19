@@ -3,7 +3,7 @@ import tkinter as tk
 from ui.consts.ColorConsts import ColorConsts
 
 class DeckListCanvasFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame, canvas: tk.Canvas) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget, canvas: tk.Canvas) -> None:
         super().__init__(
             master,
             background = ColorConsts.WHITE

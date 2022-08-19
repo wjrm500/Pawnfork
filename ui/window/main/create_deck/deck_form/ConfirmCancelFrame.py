@@ -5,7 +5,7 @@ from ui.window.main.create_deck.deck_form.confirm_cancel.CancelButton import Can
 from ui.window.main.create_deck.deck_form.confirm_cancel.ConfirmButton import ConfirmButton
 
 class ConfirmCancelFrame(tk.Frame):
-    def __init__(self, window: tk.Tk, master: tk.Frame) -> None:
+    def __init__(self, window: tk.Tk, master: tk.Widget) -> None:
         super().__init__(
             master,
             background = ColorConsts.WHITE
