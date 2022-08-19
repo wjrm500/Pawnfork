@@ -2,7 +2,6 @@ import math
 from typing import List, Literal
 import tkinter as tk
 
-from logic.consts.openings import openings
 from logic.enums.Color import Color
 from logic.study.DeckGenerator import DeckGenerator
 from ui.consts.ColorConsts import ColorConsts

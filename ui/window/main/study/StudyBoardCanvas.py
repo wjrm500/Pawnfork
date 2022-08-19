@@ -1,6 +1,6 @@
 import tkinter as tk
-from logic.enums.Color import Color
 
+from logic.enums.Color import Color
 from ui.abstract.BoardCanvas import BoardCanvas
 
 class StudyBoardCanvas(BoardCanvas):

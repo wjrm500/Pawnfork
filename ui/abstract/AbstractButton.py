@@ -1,4 +1,3 @@
-# from abc import ABC, abstractmethod
 import tkinter as tk
 
 from ui.utils.ColorUtils import ColorUtils

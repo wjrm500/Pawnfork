@@ -1,5 +1,4 @@
 import tkinter as tk
-from typing import List
 
 from logic.study.sqlalchemy.Opening import Opening
 

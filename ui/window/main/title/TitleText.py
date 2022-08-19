@@ -1,6 +1,5 @@
 import tkinter as tk
 
-from ui.abstract.AbstractButton import AbstractButton
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 

@@ -1,6 +1,6 @@
 import tkinter as tk
-from logic.study.sqlalchemy.Flashcard import Flashcard
 
+from logic.study.sqlalchemy.Flashcard import Flashcard
 from ui.consts.ColorConsts import ColorConsts
 from ui.consts.FontFamilyConsts import FontFamilyConsts
 
