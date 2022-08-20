@@ -17,5 +17,12 @@ class Deck(Base):
     ### One to many relationships
     flashcards = relationship('Flashcard', backref = 'deck', cascade = 'all,delete')
 
+    used_flashcards = []
+
     def get_random_flashcard(self) -> Flashcard:
-        return random.choice(self.flashcards)
+        random_flashcard = self.flashcards.pop(random.randrange(len(self.flashcards)))
+        self.used_flashcards.append(random_flashcard)
+        if len(self.flashcards) == 0:
+            self.flashcards = self.used_flashcards.copy()
+            self.used_flashcards = []
+        return random_flashcard
