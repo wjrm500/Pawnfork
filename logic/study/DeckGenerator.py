@@ -34,14 +34,16 @@ class DeckGenerator:
         self.flashcards_generated = 0
         t1 = time()
         print(f'The time at the beginning is: {t1}')
-        self.generate_flashcards([move.definition for move in self.opening.moves], self.turn_depth)
+        opening_moves = [move.definition for move in self.opening.moves]
+        algebraic_opening_moves = self.get_algebraic_moves_for_opening(opening_moves)
+        self.generate_flashcards(opening_moves, algebraic_opening_moves, self.turn_depth)
         t2 = time()
         print(f'The time at the end is: {t2}')
         print(f'Total time taken: {t2 - t1}')
         self.database.commit()
         return self.deck
 
-    def generate_flashcards(self, moves: List[str], turn_depth: int) -> None:
+    def generate_flashcards(self, moves: List[str], algebraic_moves: List[str], turn_depth: int) -> None:
         if turn_depth == 0:
             return
         color_to_move = Color.WHITE if len(moves) % 2 == 0 else Color.BLACK
@@ -50,18 +52,21 @@ class DeckGenerator:
         if player_to_move:
             top_moves = self.stockfish.get_top_moves(1)
             top_move = top_moves[0]
+            algebraic_move = self.get_algebraic_move(top_move['Move'])
             self.database.persist_flashcard(
                 self.deck.id,
                 moves,
+                algebraic_moves,
                 top_move['Move'],
-                self.get_algebraic_move(top_move['Move']),
+                algebraic_move,
                 self.get_algebraic_opponents_move(moves)
             )
             self.flashcards_generated += 1
             print(f'{self.flashcards_generated} flashcards generated')
             turn_depth -= 1
             new_moves = moves + [top_move['Move']]
-            self.generate_flashcards(new_moves, turn_depth)
+            new_algebraic_moves = algebraic_moves + [algebraic_move]
+            self.generate_flashcards(new_moves, new_algebraic_moves, turn_depth)
         else: # Opponent to move
             top_moves = self.stockfish.get_top_moves(self.response_depth)
             centipawns = [x['Centipawn'] for x in top_moves]
@@ -70,9 +75,11 @@ class DeckGenerator:
             good_top_moves = filter(filter_good_moves, top_moves) # Filter out any opponent moves that are significantly worse than the best move
             for top_move in good_top_moves:
                 new_moves = moves + [top_move['Move']]
-                self.generate_flashcards(new_moves, turn_depth)
+                algebraic_move = self.get_algebraic_opponents_move(new_moves)
+                new_algebraic_moves = algebraic_moves + [algebraic_move]
+                self.generate_flashcards(new_moves, new_algebraic_moves, turn_depth)
             
-    def get_algebraic_move(self, move: str) -> None:
+    def get_algebraic_move(self, move: str) -> str:
         move_capture = self.stockfish.will_move_be_a_capture(move)
         moving_piece_letter = self.stockfish.get_what_is_on_square(move[:2]).value.upper()
         moving_piece_is_pawn = moving_piece_letter == 'P'
@@ -92,3 +99,11 @@ class DeckGenerator:
         algebraic_opponents_move = self.get_algebraic_move(opponents_move)
         self.stockfish.set_position(moves) # Resetting Stockfish to current position (see note above)
         return algebraic_opponents_move
+
+    def get_algebraic_moves_for_opening(self, moves: List[str]) -> List[str]:
+        algebraic_moves = []
+        for i in range(len(moves)):
+            self.stockfish.set_position(moves[:i])
+            algebraic_move = self.get_algebraic_move(moves[i])
+            algebraic_moves.append(algebraic_move)
+        return algebraic_moves

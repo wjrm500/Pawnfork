@@ -8,6 +8,7 @@ class FlashcardMove(Base):
     id = Column(Integer, primary_key = True, autoincrement = True)
     flashcard_id = Column(Integer, ForeignKey('flashcard.id'))
     definition = Column(String)
+    algebraic_definition = Column(String)
 
     def from_square(self) -> str:
         return self.definition[:2]

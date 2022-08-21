@@ -45,7 +45,7 @@ class _Database:
         self.commit()
         return deck
     
-    def persist_flashcard(self, deck_id: int, moves: List[str], best_move: str, algebraic_best_move: str, algebraic_opponents_move: str) -> Flashcard:
+    def persist_flashcard(self, deck_id: int, moves: List[str], algebraic_moves: List[str], best_move: str, algebraic_best_move: str, algebraic_opponents_move: str) -> Flashcard:
         flashcard = Flashcard(
             deck_id = deck_id,
             best_move = best_move,
@@ -54,10 +54,11 @@ class _Database:
         )
         self.session.add(flashcard)
         self.commit()
-        for move in moves:
+        for i in range(len(moves)):
             flashcard_move = FlashcardMove(
                 flashcard_id = flashcard.id,
-                definition = move
+                definition = moves[i],
+                algebraic_definition = algebraic_moves[i]
             )
             self.session.add(flashcard_move)
         return flashcard
