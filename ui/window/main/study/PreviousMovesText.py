@@ -14,6 +14,13 @@ class PreviousMovesText(tk.Label):
         )
         self.window = window
         self.flashcard = flashcard
-        previous_moves_text = ', '.join(move.algebraic_definition for move in flashcard.moves)
+        flashcard_turns = [flashcard.moves[i:i + 2] for i in range(0, len(flashcard.moves), 2)]
+        turn_texts = []
+        for i, turn in enumerate(flashcard_turns, 1):
+            text = f'{i}. {turn[0].algebraic_definition}'
+            if len(turn) > 1:
+                text += f' {turn[1].algebraic_definition}'
+            turn_texts.append(text)
+        previous_moves_text = ', '.join(turn_texts)
         self.configure(text = f'Previous moves: {previous_moves_text}')
         self.pack(anchor = tk.CENTER, padx = 10, pady = (10, 5))
