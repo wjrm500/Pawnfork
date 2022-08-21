@@ -2,6 +2,9 @@ from time import time
 from stockfish import Stockfish
 from typing import List
 
+from ..board.pieces.Pawn import Pawn
+from ..board.pieces.King import King
+
 import logic.consts.filepaths as filepaths
 from logic.enums.Color import Color
 from logic.study.sqlalchemy.Database import Database
@@ -82,8 +85,17 @@ class DeckGenerator:
     def get_algebraic_move(self, move: str) -> str:
         move_capture = self.stockfish.will_move_be_a_capture(move)
         moving_piece_letter = self.stockfish.get_what_is_on_square(move[:2]).value.upper()
-        moving_piece_is_pawn = moving_piece_letter == 'P'
+        moving_piece_is_pawn = moving_piece_letter == Pawn.letter
         moving_piece_letter = '' if moving_piece_is_pawn else moving_piece_letter
+        # Handle castling
+        if moving_piece_letter == King.letter:
+            start_file, end_file = move[0], move[2]
+            file_shift = abs(ord(start_file) - ord(end_file))
+            if file_shift == 2:
+                return 'O-O'
+            elif file_shift == 3:
+                return 'O-O-O'
+        # Handle capture
         if move_capture == Stockfish.Capture.DIRECT_CAPTURE:
             if moving_piece_is_pawn:
                 return move[:1] + 'x' + move[2:]
