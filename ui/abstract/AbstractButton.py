@@ -21,7 +21,6 @@ class AbstractButton(tk.Button):
         self.window.configure(cursor = 'arrow')
         self.configure(background = self.original_background)
 
-    # @abstractmethod
     def click_handler(self, event) -> None:
         raise NotImplementedError
     
